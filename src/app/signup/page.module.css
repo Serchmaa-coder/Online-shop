@@ -1,46 +1,116 @@
-.main {
-  font-family: Arial, Helvetica, sans-serif;
-}
+/*/////////////////////////////////////  screen size 1800px mac 80%  /////////////////////////////////////////////// */
+@media (min-width: 288px) and (max-width: 1845px) {
+  .main {
+    font-family: Arial, Helvetica, sans-serif;
+  }
+  .big-container {
+    display: flex;
+    margin: auto;
+    min-height: 624px;
+    max-height: 100vh;
+    min-width: 300px;
+    flex-direction: column;
+    align-items: center;
+  }
+  .title {
+    text-align: center;
+    font-family: Arial, Helvetica, sans-serif;
+  }
 
-.container {
-  height: 600px;
-  width: 1800px;
-  display: flex;
-  flex-direction: column;
-  justify-content: start;
-  justify-content: space-between;
-  align-items: center;
-  align-self: center;
-}
+  .container {
+    min-height: 500px;
+    max-height: 100%;
+    min-width: 300px;
+    max-width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }
 
-.input {
-  width: 500px;
-  height: 50px;
-}
+  .input {
+    width: 500px;
+    height: 50px;
+    margin: auto;
+  }
 
-.con1 {
-  display: flex;
-  width: 500px;
-  flex-direction: row;
-  justify-content: space-between;
-  border: 1px solid #d9d9d9;
-  border-radius: 10px;
-}
-.con {
-  width: 300px;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-}
-.submitBtn {
-  height: 50px;
-  width: 180px;
-  font-size: 24px;
-  font-family: Arial, Helvetica, sans-serif;
-}
-.dobIcon {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  padding: 10px;
+  .con1 {
+    display: flex;
+    width: 500px;
+    flex-direction: row;
+    justify-content: space-between;
+    border: 1px solid #d9d9d9;
+    border-radius: 10px;
+    margin: auto;
+  }
+  .con {
+    width: 300px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin: auto;
+  }
+  .submitBtn {
+    height: 50px;
+    width: 180px;
+    font-size: 20px;
+    font-family: Arial, Helvetica, sans-serif;
+    margin: auto;
+  }
+  .dobIcon {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 10px;
+  }
+  .background {
+    height: 100vh;
+    width: 100vw;
+    background-color: #3c3c3c;
+    opacity: 85%;
+    position: absolute;
+    top: 0;
+    left: 0;
+  }
+  .success-alert {
+    height: 276px;
+    width: 348px;
+    background-color: white;
+    position: absolute;
+    top: 300px;
+    left: 720px;
+    border-radius: 10px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    opacity: 100%;
+  }
+  .alert-icon {
+    color: #10b981;
+    font-size: 70px;
+  }
+  .alert-btns {
+    display: flex;
+    justify-content: space-between;
+    width: 200px;
+  }
+  .login-btn {
+    background-color: white;
+    color: #10b981;
+    border: none;
+    font-size: 22px;
+  }
+  .login-btn:hover {
+    cursor: pointer;
+  }
+  .dismiss-btn {
+    background-color: white;
+    color: #4b5563;
+    border: none;
+    font-size: 22px;
+  }
+  .dismiss-btn:hover {
+    cursor: pointer;
+  }
 }

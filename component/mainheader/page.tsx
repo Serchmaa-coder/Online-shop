@@ -8,21 +8,12 @@ import {
   UserOutlined,
 } from '@ant-design/icons';
 
-export default function Header() {
+export default function Mainheader() {
   return (
     <div style={{ position: 'fixed', top: '0', zIndex: '1000' }}>
       <div className={styles.top}>
         <div className={styles['info-section']}>
           <p className={styles.text}>Sale info xxxxxxxxxxxx of xxxxxxxxx</p>
-        </div>
-        <div className={styles.btns}>
-          <Link href="/login">
-            <button className={styles['btn-login']}>Нэвтрэх</button>
-          </Link>
-          <p className="divider">/</p>
-          <Link href="/signup">
-            <button className={styles['btn-signup']}>Бүртгүүлэх</button>
-          </Link>
         </div>
       </div>
       <div className={styles.header}>
@@ -39,11 +30,11 @@ export default function Header() {
           <button className={styles['btn-cart']}>
             <ShoppingCartOutlined
               className={styles.icon}
-              style={{ color: 'gray' }}
+              style={{ color: 'blue' }}
             />
           </button>
           <button className={styles['btn-wishlist']}>
-            <HeartFilled className={styles.icon} style={{ color: 'gray' }} />
+            <HeartFilled className={styles.icon} style={{ color: 'red' }} />
           </button>
           <button className={styles['btn-profile']}>
             <UserOutlined className={styles['icon-profile']} />

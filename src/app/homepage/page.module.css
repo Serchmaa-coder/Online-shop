@@ -31,6 +31,9 @@
   overflow-x: auto;
   gap: 50px;
 }
+.brand-section {
+  margin-bottom: 100px;
+}
 .round-items {
   display: flex;
   font-size: 70px;

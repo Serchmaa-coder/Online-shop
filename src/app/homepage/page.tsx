@@ -18,7 +18,7 @@ import {
 
 const { Meta } = Card;
 
-export default function Home() {
+export default function Homepage() {
   return (
     <div className="lol">
       <div className={styles['carousel-section']}>
