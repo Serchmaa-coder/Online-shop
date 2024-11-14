@@ -95,7 +95,7 @@
 }
 .icon-menu {
   display: flex;
-  justify-content: start;
+  justify-content: flex-start;
   padding-left: 32px;
   font-size: 30px;
   color: black;

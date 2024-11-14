@@ -26,16 +26,28 @@ export default function Homepage() {
       <div className={styles['carousel-section']}>
         <Carousel autoplay>
           <div>
-            <div className={styles.contentStyle}>IMAGE ONE</div>
+            <img
+              className={styles.contentStyle}
+              src="https://media-cldnry.s-nbcnews.com/image/upload/t_fit-1500w,f_auto,q_auto:best/rockcms/2024-06/240610-beauty-awards-2024-skincare-winners-vl-social-91be20.jpg"
+            />
           </div>
           <div>
-            <div className={styles.contentStyle}>IMAGE TWO</div>
+            <img
+              className={styles.contentStyle}
+              src="https://www.kitchenaid.com/is/image/content/dam/business-unit/kitchenaid/en-us/marketing-content/site-assets/page-content/pinch-of-help/filling-your-home-with-appliances/Filling-your-home-with-appliances-counter-3.jpg?fmt=png-alpha&qlt=85,0&resMode=sharp2&op_usm=1.75,0.3,2,0&scl=1&constrain=fit,1"
+            />
           </div>
           <div>
-            <div className={styles.contentStyle}>IMAGE THREE</div>
+            <img
+              className={styles.contentStyle}
+              src="https://marketplace.canva.com/EAFfT9NH-JU/1/0/1600w/canva-gray-minimalist-fashion-big-sale-banner-TvkdMwoxWP8.jpg"
+            />
           </div>
           <div>
-            <div className={styles.contentStyle}>IMAGE FOUR</div>
+            <img
+              className={styles.contentStyle}
+              src="https://img.freepik.com/free-vector/electronics-store-template-design_23-2151143835.jpg"
+            />
           </div>
         </Carousel>
       </div>

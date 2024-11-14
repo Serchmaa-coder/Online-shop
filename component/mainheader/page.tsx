@@ -2,27 +2,20 @@
 import { useRouter } from 'next/navigation';
 import styles from './page.module.css';
 import {
-  ContainerOutlined,
-  CreditCardOutlined,
   HeartFilled,
-  HeartOutlined,
   LogoutOutlined,
   MenuFoldOutlined,
-  MenuOutlined,
   MenuUnfoldOutlined,
-  PushpinOutlined,
   SearchOutlined,
-  SettingOutlined,
   ShoppingCartOutlined,
   UserOutlined,
 } from '@ant-design/icons';
-import type { MenuProps } from 'antd';
-import { Dropdown, Input, Menu } from 'antd';
+import { useEffect, useState } from 'react';
 import { getAuth, signOut, onAuthStateChanged } from 'firebase/auth';
 import { initializeApp } from 'firebase/app';
-import { useEffect, useState } from 'react';
-import { style } from 'framer-motion/client';
-import { ClassNames } from '@emotion/react';
+import { DocumentData, getFirestore } from 'firebase/firestore';
+import { collection, getDocs } from 'firebase/firestore';
+import { Dropdown, Input, MenuProps } from 'antd';
 
 // Firebase configuration
 const firebaseConfig = {
@@ -38,16 +31,17 @@ const firebaseConfig = {
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
+const db = getFirestore(app);
 
 export default function Mainheader() {
   const router = useRouter();
   const [profilePhoto, setProfilePhoto] = useState<string | null>(null);
-  const [collapsed, setCollapsed] = useState(false);
+  const [collapsed, setCollapsed] = useState(true);
+  const [categories, setCategories] = useState<DocumentData[]>([]);
 
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (user) => {
       if (user) {
-        // Update the profile photo URL if the user is signed in
         setProfilePhoto(user.photoURL);
       } else {
         console.log('User logged out');
@@ -56,6 +50,25 @@ export default function Mainheader() {
     });
     return () => unsubscribe();
   }, [router]);
+
+  useEffect(() => {
+    const fetchCategories = async () => {
+      try {
+        const categoriesCol = collection(db, 'Product categories');
+        const categorySnapshot = await getDocs(categoriesCol);
+        const categoryData = categorySnapshot.docs.map((doc) => doc.data());
+        setCategories(categoryData);
+      } catch (error) {
+        console.error('Error fetching categories:', error);
+      }
+    };
+
+    fetchCategories();
+  }, []);
+
+  const toggleCollapsed = () => {
+    setCollapsed(!collapsed);
+  };
 
   // Profile dropdown items
   const items: MenuProps['items'] = [
@@ -95,25 +108,6 @@ export default function Mainheader() {
     },
   ];
 
-  //Menu items
-  const item2: MenuProps['items'] = [
-    {
-      label: (
-        <div
-          className={styles['category-menu-items']}
-          onClick={() => console.log('Fashion and Apparel clicked')}
-        >
-          Fashion and Apparel
-        </div>
-      ),
-      key: '2',
-    },
-  ];
-
-  const toggleCollapsed = () => {
-    setCollapsed(!collapsed);
-  };
-
   return (
     <div style={{ position: 'fixed', top: '0', zIndex: '1000' }}>
       <div className={styles.top}>
@@ -129,13 +123,25 @@ export default function Mainheader() {
             <MenuFoldOutlined className="icon-menu" />
           )}
         </button>
-        <Menu
-          mode="inline"
-          theme="light"
-          inlineCollapsed={collapsed}
-          items={item2}
-          className={`${styles.menu} ${collapsed ? styles.hiddenMenu : ''}`}
-        />
+
+        {/* Custom Category Menu */}
+        <div className={`${styles.menu} ${collapsed ? styles.hiddenMenu : ''}`}>
+          {categories.map((category, index) => (
+            <div key={index}>
+              <div
+                onClick={() => console.log(`${category} clicked`)}
+                className={styles.categoryItem}
+              >
+                {Object.entries(category).map(([categoryName]) => (
+                  <button key={categoryName} className={styles.categoryItem}>
+                    <h2>{categoryName}</h2>
+                  </button>
+                ))}
+              </div>
+            </div>
+          ))}
+        </div>
+
         <div
           className={`${styles.background} ${collapsed ? styles.hiddenback : ''}`}
         ></div>
