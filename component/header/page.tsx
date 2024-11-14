@@ -7,6 +7,7 @@ import {
   ShoppingCartOutlined,
   UserOutlined,
 } from '@ant-design/icons';
+import { Input } from 'antd';
 
 export default function Header() {
   return (
@@ -25,17 +26,13 @@ export default function Header() {
           </Link>
         </div>
       </div>
-      <div className={styles.header}>
+      <nav className={styles.header}>
         <button className={styles['btn-menu']}>
           <MenuOutlined className="icon-menu" />
         </button>
 
         <p className={styles.title}>SHOP NAME</p>
-
         <div className={styles.con1}>
-          <button className={styles['btn-search']}>
-            <SearchOutlined className={styles.icon} />
-          </button>
           <button className={styles['btn-cart']}>
             <ShoppingCartOutlined
               className={styles.icon}
@@ -49,6 +46,15 @@ export default function Header() {
             <UserOutlined className={styles['icon-profile']} />
           </button>
         </div>
+      </nav>
+      <div className={styles['search-section']}>
+        <Input
+          type="text"
+          placeholder="Хайлт хийх"
+          className={styles['search-input']}
+          size="large"
+          prefix={<SearchOutlined />}
+        />
       </div>
     </div>
   );

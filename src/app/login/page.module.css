@@ -55,3 +55,10 @@
   width: 300px;
   font-size: 22px;
 }
+.signup-google {
+  width: 500px;
+  height: 50px;
+  display: flex;
+  justify-content: start;
+  margin-bottom: 60px;
+}

@@ -2,17 +2,15 @@
 import React, { useState } from 'react';
 import SignUpLayout from './layout';
 import styles from './page.module.css';
-import { Input, Checkbox, DatePicker, Button, Form } from 'antd';
+import { Input, Button, Form } from 'antd';
 import {
   CheckCircleFilled,
-  CheckCircleOutlined,
   KeyOutlined,
   MailOutlined,
   UserAddOutlined,
   UserOutlined,
 } from '@ant-design/icons';
 import HeaderOfAuthentication from '../../../component/header2/page';
-import type { Dayjs } from 'dayjs';
 import { initializeApp } from 'firebase/app';
 import { getAuth, createUserWithEmailAndPassword } from 'firebase/auth';
 import Footer from '../../../component/footer/page';
@@ -36,34 +34,21 @@ const auth = getAuth(app);
 export default function SignupPage() {
   const [lastName, setLastName] = useState('');
   const [firstName, setFirstName] = useState('');
-  const [gender, setGender] = useState('');
-  const [birthDate, setBirthDate] = useState<Dayjs | null>(null);
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
   const [showSuccess, setShowSuccess] = useState(false);
   const [form] = Form.useForm();
 
-  const handleGenderChange = (value: string) => {
-    setGender(value);
-  };
-
-  const handleDateChange = (date: Dayjs | null) => {
-    setBirthDate(date);
-  };
-
   const handleClear = () => {
     setLastName('');
     setFirstName('');
-    setGender('');
-    setBirthDate(null);
     setEmail('');
     setPassword('');
     setConfirmPassword('');
   };
 
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any, @typescript-eslint/no-unused-vars
-  const handleSubmit = async (values: any) => {
+  const handleSubmit = async (values) => {
     if (password !== confirmPassword) {
       alert('Passwords do not match!');
       return;
@@ -82,8 +67,6 @@ export default function SignupPage() {
         uid: user.uid,
         lastName,
         firstName,
-        gender,
-        birthDate: birthDate ? birthDate.format('YYYY-MM-DD') : null,
         email: user.email,
       });
       setShowSuccess(true);
@@ -120,7 +103,6 @@ export default function SignupPage() {
                   value={lastName}
                   onChange={(e) => setLastName(e.target.value)}
                 />
-
                 <Input
                   size="large"
                   placeholder="Нэрээ оруулна уу!"
@@ -129,33 +111,6 @@ export default function SignupPage() {
                   value={firstName}
                   onChange={(e) => setFirstName(e.target.value)}
                 />
-
-                <div className={styles.con1}>
-                  <div className={styles.dobIcon}>
-                    <CheckCircleOutlined
-                      style={{ height: '20px', width: '20px' }}
-                    />
-                  </div>
-                  <p>Хүйсээ сонгоно уу!</p>
-                  <div className={styles.con}>
-                    <Checkbox onChange={() => handleGenderChange('Male')}>
-                      Эр
-                    </Checkbox>
-                    <Checkbox onChange={() => handleGenderChange('Female')}>
-                      Эм
-                    </Checkbox>
-                    <Checkbox onChange={() => handleGenderChange('Other')}>
-                      Бусад
-                    </Checkbox>
-                  </div>
-                </div>
-
-                <DatePicker
-                  onChange={handleDateChange}
-                  placeholder="Төрсөн он сараа оруулна уу!"
-                  style={{ width: '500px', height: '50px' }}
-                />
-
                 <Input
                   size="large"
                   placeholder="Майл хаягаа оруулна уу!"
@@ -165,7 +120,6 @@ export default function SignupPage() {
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
                 />
-
                 <Input
                   size="large"
                   placeholder="Нууц үгээ оруулна уу!"
@@ -175,7 +129,6 @@ export default function SignupPage() {
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
                 />
-
                 <Input
                   size="large"
                   placeholder="Нууц үгээ дахин оруулна уу!"
@@ -185,16 +138,14 @@ export default function SignupPage() {
                   value={confirmPassword}
                   onChange={(e) => setConfirmPassword(e.target.value)}
                 />
-
                 <Button
                   type="primary"
                   className={styles.submitBtn}
-                  htmlType="submit" // No need for onClick here
+                  htmlType="submit"
                 >
                   <UserAddOutlined /> Бүртгүүлэх
                 </Button>
               </div>
-
               {showSuccess && (
                 <div className={styles.background}>
                   <div className={styles['success-alert']}>

@@ -33,6 +33,12 @@
     height: 50px;
     margin: auto;
   }
+  .signup-google {
+    width: 500px;
+    height: 50px;
+    display: flex;
+    justify-content: start;
+  }
 
   .con1 {
     display: flex;
@@ -66,8 +72,7 @@
   .background {
     height: 100vh;
     width: 100vw;
-    background-color: #3c3c3c;
-    opacity: 85%;
+    background-color: #3c3c3c74;
     position: absolute;
     top: 0;
     left: 0;

@@ -17,6 +17,8 @@ import {
 } from '@ant-design/icons';
 
 const { Meta } = Card;
+import { getFirestore } from 'firebase/firestore';
+//const db = getFirestore(app);
 
 export default function Homepage() {
   return (

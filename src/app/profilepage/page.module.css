@@ -1,0 +1,121 @@
+.main-container {
+  margin: 32px;
+}
+.title {
+  font-size: 32px;
+  border: none;
+  margin-bottom: 22px;
+}
+.title:focus {
+  color: black;
+  opacity: 1;
+}
+
+.con1 {
+  display: flex;
+  flex-direction: row;
+  width: 1736px;
+  justify-content: space-between;
+}
+.profile-photo {
+  height: 350px;
+  width: 300px;
+  background-color: #8c8b8b83;
+  border-radius: 6px;
+}
+.edit-btn {
+  background-color: white;
+  border: none;
+  height: 32px;
+  width: 32px;
+  font-size: 32px;
+  margin-right: 32px;
+}
+.icon-profile {
+  height: 350px;
+  width: 300px;
+  font-size: 300px;
+}
+.photo-upload-section {
+  background-color: #6f6f6f7d;
+  width: 1800px;
+  height: 500px;
+  position: absolute;
+  top: 200px;
+}
+.fileInput {
+  position: inherit;
+  top: 250px;
+  left: 750px;
+}
+.close-btn {
+  font-size: 32px;
+  position: inherit;
+  right: 0px;
+  margin: 20px;
+  z-index: 1000;
+}
+.photo-url-input {
+  position: inherit;
+  top: 100px;
+  z-index: 1000;
+}
+.account-info {
+  width: 1400px;
+  height: 350px;
+  background-color: #8c8b8b56;
+  border: 3px solid #6f6f6f;
+  border-style: dashed;
+  border-radius: 6px;
+  gap: 10px;
+}
+.info-section {
+  display: flex;
+  flex-direction: row;
+  gap: 22px;
+  margin-left: 22px;
+  margin-top: 10px;
+  align-items: center;
+}
+.icon-section {
+  height: 32px;
+  width: 32px;
+  font-size: 32px;
+  margin: 5px;
+  border: 3px solid #6f6f6f;
+  border-style: dashed;
+  background-color: white;
+  padding: 5px;
+  flex-direction: row;
+}
+.info-text {
+  font-size: 22px;
+}
+.outer-container {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+}
+.edit-btn-of-info {
+  padding: 5px;
+  border: none;
+  background-color: #8c8b8b00;
+  font-size: 32px;
+  margin-right: 32px;
+}
+.sale-history-section {
+  width: 1736px;
+  height: 200px;
+  background-color: #8c8b8b56;
+  margin-left: 32px;
+  margin-bottom: 32px;
+  border-radius: 6px;
+  border: 3px solid #6f6f6f;
+  border-style: dashed;
+}
+.sale-history-section {
+  display: flex;
+  flex-direction: row;
+  align-items: start;
+}
