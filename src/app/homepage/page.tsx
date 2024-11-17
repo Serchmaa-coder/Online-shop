@@ -3,12 +3,10 @@ import React from 'react';
 import { Carousel } from 'antd';
 import styles from './page.module.css';
 import { Card } from 'antd';
-import { style } from 'framer-motion/m';
 import {
   AmazonCircleFilled,
   AndroidFilled,
   AppleFilled,
-  AppleOutlined,
   ChromeFilled,
   DingtalkCircleFilled,
   DiscordFilled,
@@ -17,7 +15,7 @@ import {
 } from '@ant-design/icons';
 
 const { Meta } = Card;
-import { getFirestore } from 'firebase/firestore';
+// import { getFirestore } from 'firebase/firestore';
 //const db = getFirestore(app);
 
 export default function Homepage() {

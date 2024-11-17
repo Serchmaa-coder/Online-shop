@@ -15,7 +15,6 @@ import {
 } from '@ant-design/icons';
 import { getAuth, onAuthStateChanged, updateProfile } from 'firebase/auth';
 import { initializeApp } from 'firebase/app';
-import { CreditCardIcon } from '@heroicons/react/16/solid';
 
 // Firebase configuration
 const firebaseConfig = {
