@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "364574940309",
+    "project_id": "onlineshop-d6769",
+    "storage_bucket": "onlineshop-d6769.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:364574940309:android:1a3223bf72a5cbef8b8f9c",
+        "android_client_info": {
+          "package_name": "mn.muis.onlineshop"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "364574940309-9nkii5vrqi98vc0m8rerv25qprdvnli3.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "mn.muis.onlineshop",
+            "certificate_hash": "aca841608516e97d5206fb7cfdd0b1e04b52e239"
+          }
+        },
+        {
+          "client_id": "364574940309-f9g5ua8ub4oiuipv9mvra5jeo5hvpm5p.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCzBAqYXFdqlQ7jFrARTs-AtmQW6JQzwTI"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "364574940309-f9g5ua8ub4oiuipv9mvra5jeo5hvpm5p.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

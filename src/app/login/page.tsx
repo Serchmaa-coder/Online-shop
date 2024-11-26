@@ -10,27 +10,15 @@ import {
   MailOutlined,
   GoogleOutlined,
 } from '@ant-design/icons';
-import { initializeApp } from 'firebase/app';
 import {
   getAuth,
   signInWithEmailAndPassword,
   GoogleAuthProvider,
   signInWithPopup,
 } from 'firebase/auth';
+import { initializeFirebase } from '../../../lib/firebaseClient';
 
-// Firebase configuration
-const firebaseConfig = {
-  apiKey: 'AIzaSyBg1uKO4ZcczopU1XaIJgOuUdoNsX-67hk',
-  authDomain: 'onlineshop-d6769.firebaseapp.com',
-  projectId: 'onlineshop-d6769',
-  storageBucket: 'onlineshop-d6769.firebasestorage.app',
-  messagingSenderId: '364574940309',
-  appId: '1:364574940309:web:20a2ae05c900ffad8b8f9c',
-  measurementId: 'G-L8M6HE7JWE',
-};
-
-// Initialize Firebase app and auth
-const app = initializeApp(firebaseConfig);
+const app = initializeFirebase();
 const auth = getAuth(app);
 const googleProvider = new GoogleAuthProvider();
 
@@ -57,7 +45,7 @@ export default function LoginPage() {
       }, 2000);
     } catch (error) {
       console.error('Error with Google login:', error);
-      alert(`Google Login failed: ${error.message}`);
+      alert(`Google Login failed: ${error}`);
     }
   };
 
@@ -84,7 +72,7 @@ export default function LoginPage() {
       }, 2000);
     } catch (error) {
       console.error('Error logging in:', error);
-      alert(`Login failed: ${error.message}`);
+      alert(`Login failed: ${error}`);
     }
   };
 
@@ -96,7 +84,7 @@ export default function LoginPage() {
 
   return (
     <main className={styles.container}>
-      <h1 className={styles.title}>Нэвтрэх</h1>
+      <h1 className={styles.title}>Login</h1>
       <Form
         name="basic"
         initialValues={{ remember: true }}

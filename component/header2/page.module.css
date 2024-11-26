@@ -1,5 +1,51 @@
-/*/////////////////////////////////////  screen size 1800px mac 80%  /////////////////////////////////////////////// */
-@media (min-width: 288px) and (max-width: 14400px) {
+/*/////////////////////////////////////   small  screen size   /////////////////////////////////////////////// */
+@media only screen and (max-width: 768px) {
+  .top {
+    display: flex;
+    height: 20px;
+    width: 392px;
+    background-color: #1a4848;
+    align-items: center;
+    padding: 10px;
+  }
+  .info-section {
+    display: flex;
+    width: 392px;
+    font-size: 2.5vh;
+    max-height: 2.5vh;
+    align-items: center;
+    align-content: center;
+    text-align: center;
+  }
+  .text {
+    font-size: 14px;
+    color: white;
+    font-weight: 200;
+    font-family: Arial, Helvetica, sans-serif;
+    position: relative;
+    left: 20vw;
+  }
+  .header {
+    width: 392px;
+    height: 80px;
+    background-color: #ffd500;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    padding: 10px;
+    text-align: center;
+    justify-content: center;
+  }
+  .title {
+    display: flex;
+    font-size: 30px;
+    color: black;
+    font-weight: bold;
+    font-family: Arial, Helvetica, sans-serif;
+  }
+}
+@media only screen and (min-width: 768px) {
   .top {
     display: flex;
     min-width: none;

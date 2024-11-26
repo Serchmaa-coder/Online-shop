@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 'use client';
 import { useRouter } from 'next/navigation';
 import styles from './page.module.css';
@@ -12,26 +13,23 @@ import {
 } from '@ant-design/icons';
 import { useEffect, useState } from 'react';
 import { getAuth, signOut, onAuthStateChanged } from 'firebase/auth';
-import { initializeApp } from 'firebase/app';
 import { DocumentData, getFirestore } from 'firebase/firestore';
 import { collection, getDocs } from 'firebase/firestore';
 import { Dropdown, Input, MenuProps } from 'antd';
+import { initializeFirebase } from '../../lib/firebaseClient';
+import Image from 'next/image';
+import { doc, getDoc } from 'firebase/firestore';
 
-// Firebase configuration
-const firebaseConfig = {
-  apiKey: 'AIzaSyBg1uKO4ZcczopU1XaIJgOuUdoNsX-67hk',
-  authDomain: 'onlineshop-d6769.firebaseapp.com',
-  projectId: 'onlineshop-d6769',
-  storageBucket: 'onlineshop-d6769.appspot.com',
-  messagingSenderId: '364574940309',
-  appId: '1:364574940309:web:20a2ae05c900ffad8b8f9c',
-  measurementId: 'G-L8M6HE7JWE',
-};
-
-// Initialize Firebase
-const app = initializeApp(firebaseConfig);
+const app = initializeFirebase();
 const auth = getAuth(app);
 const db = getFirestore(app);
+const firestore = getFirestore(app);
+
+type Category = {
+  name: string;
+  id: string;
+  counter: string | number; // Assuming counter can be both number and string
+};
 
 export default function Mainheader() {
   const router = useRouter();
@@ -40,29 +38,65 @@ export default function Mainheader() {
   const [categories, setCategories] = useState<DocumentData[]>([]);
 
   useEffect(() => {
-    const unsubscribe = onAuthStateChanged(auth, (user) => {
+    const unsubscribe = onAuthStateChanged(auth, async (user) => {
       if (user) {
-        setProfilePhoto(user.photoURL);
+        if (user.photoURL) {
+          setProfilePhoto(user.photoURL);
+        } else {
+          try {
+            // Fetch profilePictureUrl from Firestore
+            const userRef = doc(firestore, 'users', user.uid);
+            const userDoc = await getDoc(userRef);
+
+            if (userDoc.exists()) {
+              const userData = userDoc.data();
+              setProfilePhoto(userData.profilePictureUrl || null);
+            } else {
+              console.log('User document does not exist in Firestore');
+            }
+          } catch (error) {
+            console.error('Error fetching user document:', error);
+          }
+        }
       } else {
         console.log('User logged out');
         router.push('/');
       }
     });
+
     return () => unsubscribe();
-  }, [router]);
+  }, [auth, firestore, router]);
 
   useEffect(() => {
     const fetchCategories = async () => {
       try {
         const categoriesCol = collection(db, 'Product categories');
         const categorySnapshot = await getDocs(categoriesCol);
-        const categoryData = categorySnapshot.docs.map((doc) => doc.data());
+
+        // Log raw data to inspect the structure
+        const rawCategoryData = categorySnapshot.docs.map((doc) => doc.data());
+        console.log('Raw category data: ', rawCategoryData);
+
+        // Map the raw data to the desired structure
+        const categoryData: Category[] = rawCategoryData.flatMap(
+          (categoryObject) => {
+            return Object.entries(categoryObject).map(
+              ([categoryName, categoryDetails]) => ({
+                name: categoryName,
+                id: categoryDetails.id,
+                counter: categoryDetails.counter,
+              }),
+            );
+          },
+        );
+
+        // Set the categories state
         setCategories(categoryData);
+        console.log('Processed category data: ', categoryData);
       } catch (error) {
         console.error('Error fetching categories:', error);
       }
     };
-
     fetchCategories();
   }, []);
 
@@ -70,7 +104,6 @@ export default function Mainheader() {
     setCollapsed(!collapsed);
   };
 
-  // Profile dropdown items
   const items: MenuProps['items'] = [
     {
       label: (
@@ -124,19 +157,25 @@ export default function Mainheader() {
           )}
         </button>
 
-        {/* Custom Category Menu */}
         <div className={`${styles.menu} ${collapsed ? styles.hiddenMenu : ''}`}>
           {categories.map((category, index) => (
             <div key={index}>
               <div
-                onClick={() => console.log(`${category} clicked`)}
+                onClick={() => {
+                  router.push(
+                    `/homepage/categorypage?categoryId=${category.id}`,
+                  );
+
+                  console.log(category.id);
+                }}
                 className={styles.categoryItem}
               >
-                {Object.entries(category).map(([categoryName]) => (
-                  <button key={categoryName} className={styles.categoryItem}>
-                    <h2>{categoryName}</h2>
-                  </button>
-                ))}
+                <button
+                  className={styles.categoryItem}
+                  onClick={() => setCollapsed(!collapsed)}
+                >
+                  <h2>{category.name}</h2>
+                </button>
               </div>
             </div>
           ))}
@@ -154,18 +193,20 @@ export default function Mainheader() {
           <div className={styles['cart-section']}>
             <div className={styles['order-money']}></div>
             <button className={styles['btn-cart']}>
-              <ShoppingCartOutlined className={styles.icon} />
+              <ShoppingCartOutlined className={styles.icon1} />
             </button>
           </div>
           <button className={styles['btn-wishlist']}>
-            <HeartFilled className={styles.icon} />
+            <HeartFilled className={styles.icon2} />
           </button>
 
           <Dropdown menu={{ items }} trigger={['click']}>
             <a onClick={(e) => e.preventDefault()}>
               <button className={styles['btn-profile']}>
                 {profilePhoto ? (
-                  <img
+                  <Image
+                    height={40}
+                    width={40}
                     src={profilePhoto}
                     alt="Profile"
                     className={styles['profile-photo']}

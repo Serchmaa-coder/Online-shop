@@ -1,72 +1,132 @@
 'use client';
-import { useRouter } from 'next/navigation';
-import styles from './page.module.css';
-import React, { useEffect, useState, useRef } from 'react';
+import { useEffect, useState, useRef } from 'react';
+import { getAuth, onAuthStateChanged, updateProfile } from 'firebase/auth';
+import { getFirestore, doc, getDoc, updateDoc } from 'firebase/firestore';
+import { initializeFirebase } from '../../../lib/firebaseClient';
+import Image from 'next/image';
 import {
   CloseOutlined,
-  ContainerOutlined,
   CreditCardOutlined,
   EditOutlined,
-  LockOutlined,
   MailOutlined,
   PhoneOutlined,
   PushpinOutlined,
   UserOutlined,
 } from '@ant-design/icons';
-import { getAuth, onAuthStateChanged, updateProfile } from 'firebase/auth';
-import { initializeApp } from 'firebase/app';
+import styles from './page.module.css';
 
-// Firebase configuration
-const firebaseConfig = {
-  apiKey: 'AIzaSyBg1uKO4ZcczopU1XaIJgOuUdoNsX-67hk',
-  authDomain: 'onlineshop-d6769.firebaseapp.com',
-  projectId: 'onlineshop-d6769',
-  storageBucket: 'onlineshop-d6769.appspot.com',
-  messagingSenderId: '364574940309',
-  appId: '1:364574940309:web:20a2ae05c900ffad8b8f9c',
-  measurementId: 'G-L8M6HE7JWE',
-};
-const app = initializeApp(firebaseConfig);
+const app = initializeFirebase();
 const auth = getAuth(app);
+const db = getFirestore(app);
 
 export default function ProfilePage() {
-  const router = useRouter();
   const [profilePhoto, setProfilePhoto] = useState<string | null>(null);
   const [username, setUsername] = useState<string>('');
+  const [address, setAddress] = useState<string>('');
+  const [phoneNumber, setPhoneNumber] = useState<string>('');
+  const [creditCardInfo, setCreditCardInfo] = useState<string>('');
+  const [email, setEmail] = useState<string>('');
   const [isEditing, setIsEditing] = useState<boolean>(false);
   const [showPhotoUpload, setShowPhotoUpload] = useState<boolean>(false);
   const [photoUrlInput, setPhotoUrlInput] = useState<string>('');
+  const [loading, setLoading] = useState<boolean>(true);
+  const [error, setError] = useState<string | null>(null);
 
-  // Create a ref for the username input
   const usernameInputRef = useRef<HTMLInputElement>(null);
+
+  const fetchUserData = async (user) => {
+    const userDocRef = doc(db, 'users', user.uid);
+    try {
+      const userDoc = await getDoc(userDocRef);
+      if (userDoc.exists()) {
+        const userData = userDoc.data();
+        setAddress(userData?.address || 'No address');
+        setPhoneNumber(userData?.phoneNumber || 'No phone number');
+        setCreditCardInfo(userData?.creditCardInfo || 'No credit card info');
+        setEmail(userData?.email || user.email || 'No email');
+        setUsername(userData?.username || user.username || 'No username');
+        setLoading(false);
+      } else {
+        setError('No such document in Firestore!');
+        setLoading(false);
+      }
+    } catch (error) {
+      setError(`Error fetching user data: ${error}`);
+      setLoading(false);
+    }
+  };
 
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (user) => {
       if (user) {
-        setProfilePhoto(user.photoURL);
-        setUsername(user.displayName || 'Username');
+        fetchUserData(user);
       } else {
-        console.log('User logged out');
-        router.push('/');
+        setError('No user logged in');
+        setLoading(false);
       }
     });
+
     return () => unsubscribe();
-  }, [router]);
+  }, []);
+
+  // Second useEffect - Handle profile photo and update based on auth state
+  useEffect(() => {
+    const unsubscribe = onAuthStateChanged(auth, async (user) => {
+      if (user) {
+        if (user.photoURL) {
+          setProfilePhoto(user.photoURL);
+        } else {
+          try {
+            // Fetch profilePictureUrl from Firestore
+            const userRef = doc(db, 'users', user.uid);
+            const userDoc = await getDoc(userRef);
+
+            if (userDoc.exists()) {
+              const userData = userDoc.data();
+              setProfilePhoto(userData.profilePictureUrl || null);
+            } else {
+              console.log('User document does not exist in Firestore');
+            }
+          } catch (error) {
+            console.error('Error fetching user document:', error);
+          }
+        }
+      } else {
+        console.log('User logged out');
+        // You might want to redirect here if necessary
+      }
+    });
+
+    return () => unsubscribe(); // Cleanup on component unmount
+  }, []); // This runs only once when the component mounts
+
+  if (loading) {
+    return <div>Loading...</div>;
+  }
+
+  if (error) {
+    return <div>Error: {error}</div>;
+  }
 
   const handleEditClick = () => {
     if (isEditing) {
       const user = auth.currentUser;
       if (user) {
+        // Update username on Firebase Authentication
         updateProfile(user, { displayName: username })
           .then(() => {
             console.log('Username updated successfully');
+            // Also update Firestore with new username
+            const userDocRef = doc(db, 'users', user.uid);
+            updateDoc(userDocRef, { username }).catch((error) => {
+              console.error('Error updating username in Firestore:', error);
+            });
           })
           .catch((error) => {
             console.error('Error updating username:', error);
           });
       }
     } else {
-      // Focus the input when switching to edit mode
       setTimeout(() => {
         usernameInputRef.current?.focus();
       }, 0);
@@ -85,7 +145,11 @@ export default function ProfilePage() {
         // Update the profile photo URL in Firebase Authentication
         await updateProfile(user, { photoURL: photoUrlInput });
 
-        // Update local state with new profile photo URL
+        // Update Firestore to store the new profile picture URL
+        const userDocRef = doc(db, 'users', user.uid);
+        await updateDoc(userDocRef, { profilePictureUrl: photoUrlInput });
+
+        // Update local state with the new profile photo URL
         setProfilePhoto(photoUrlInput);
         setShowPhotoUpload(false);
         console.log('Profile photo updated successfully');
@@ -117,7 +181,9 @@ export default function ProfilePage() {
             onClick={() => setShowPhotoUpload(true)}
           >
             {profilePhoto ? (
-              <img
+              <Image
+                height={350}
+                width={300}
                 src={profilePhoto}
                 alt="Profile"
                 className={styles['profile-photo']}
@@ -132,7 +198,7 @@ export default function ProfilePage() {
                 <div className={styles['icon-section']}>
                   <PushpinOutlined />
                 </div>
-                <div className={styles['info-text']}>address information</div>
+                <div className={styles['info-text']}>{address}</div>
               </div>
               <button className={styles['edit-btn-of-info']}>
                 <EditOutlined />
@@ -143,7 +209,7 @@ export default function ProfilePage() {
                 <div className={styles['icon-section']}>
                   <PhoneOutlined />
                 </div>
-                <div className={styles['info-text']}>phone number</div>
+                <div className={styles['info-text']}>{phoneNumber}</div>
               </div>
               <button className={styles['edit-btn-of-info']}>
                 <EditOutlined />
@@ -154,9 +220,7 @@ export default function ProfilePage() {
                 <div className={styles['icon-section']}>
                   <CreditCardOutlined />
                 </div>
-                <div className={styles['info-text']}>
-                  credit card information
-                </div>
+                <div className={styles['info-text']}>{creditCardInfo}</div>
               </div>
               <button className={styles['edit-btn-of-info']}>
                 <EditOutlined />
@@ -167,18 +231,7 @@ export default function ProfilePage() {
                 <div className={styles['icon-section']}>
                   <MailOutlined />
                 </div>
-                <div className={styles['info-text']}>email information</div>
-              </div>
-              <button className={styles['edit-btn-of-info']}>
-                <EditOutlined />
-              </button>
-            </div>
-            <div className={styles['outer-container']}>
-              <div className={styles['info-section']}>
-                <div className={styles['icon-section']}>
-                  <LockOutlined />
-                </div>
-                <div className={styles['info-text']}>password information</div>
+                <div className={styles['info-text']}>{email}</div>
               </div>
               <button className={styles['edit-btn-of-info']}>
                 <EditOutlined />
@@ -187,27 +240,27 @@ export default function ProfilePage() {
           </div>
         </div>
       </div>
-      <div className={styles['sale-history-section']}>
-        <div className={styles['icon-section']}>
-          <ContainerOutlined />
-        </div>
-        <h3 className={styles.title}>Sale History</h3>
-      </div>
-
       {showPhotoUpload && (
-        <div className={styles['photo-upload-section']}>
+        <div className={styles['photo-upload']}>
           <input
+            className={styles['photot-upload-section']}
             type="text"
-            className={styles['photo-url-input']}
             placeholder="Enter Photo URL"
             value={photoUrlInput}
             onChange={handlePhotoUrlChange}
           />
-          <button onClick={uploadPhotoUrl}>Save it</button>
-          <CloseOutlined
-            className={styles['close-btn']}
+          <button
+            onClick={uploadPhotoUrl}
+            className={styles['upload-photo-btn']}
+          >
+            Upload
+          </button>
+          <button
             onClick={() => setShowPhotoUpload(false)}
-          />
+            className={styles['exit-btn']}
+          >
+            <CloseOutlined />
+          </button>
         </div>
       )}
     </main>

@@ -1,16 +1,70 @@
-/*/////////////////////////////////////  screen size 1800px mac 80%  /////////////////////////////////////////////// */
-@media (min-width: 288px) and (max-width: 1845px) {
+@media only screen and (max-width: 768px) {
   .main {
     font-family: Arial, Helvetica, sans-serif;
   }
   .big-container {
     display: flex;
     margin: auto;
-    min-height: 624px;
+    height: 500px;
+    width: 350px;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 20px;
+  }
+  .title {
+    text-align: center;
+    font-family: Arial, Helvetica, sans-serif;
+  }
+  .container {
+    height: 350px;
+    width: 350px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }
+  .input {
+    width: 300px;
+    height: 50px;
+    margin: auto;
+  }
+  .con1 {
+    display: flex;
+    width: 300px;
+    flex-direction: row;
+    justify-content: space-between;
+    border: 1px solid #d9d9d9;
+    border-radius: 10px;
+    margin: auto;
+  }
+  .con {
+    width: 300px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin: auto;
+  }
+  .submitBtn {
+    height: 50px;
+    width: 180px;
+    font-size: 20px;
+    font-family: Arial, Helvetica, sans-serif;
+    margin: auto;
+  }
+}
+@media only screen and (min-width: 768px) {
+  .main {
+    font-family: Arial, Helvetica, sans-serif;
+  }
+  .big-container {
+    display: flex;
+    margin: auto;
+    min-height: 524px;
     max-height: 100vh;
     min-width: 300px;
     flex-direction: column;
     align-items: center;
+    margin-top: 50px;
   }
   .title {
     text-align: center;
@@ -18,7 +72,7 @@
   }
 
   .container {
-    min-height: 500px;
+    min-height: 350px;
     max-height: 100%;
     min-width: 300px;
     max-width: 100%;
