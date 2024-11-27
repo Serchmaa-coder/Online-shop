@@ -27,6 +27,34 @@ export default function SignupPage() {
   };
 
   const handleSubmit = async () => {
+    const errors = [];
+
+    // Check for each condition and push an error message if unmet
+    if (password.length < 6) {
+      errors.push('Password must be at least 6 characters long.');
+    }
+    if (!/[a-z]/.test(password)) {
+      errors.push('Password must include at least one lowercase letter.');
+    }
+    if (!/[A-Z]/.test(password)) {
+      errors.push('Password must include at least one uppercase letter.');
+    }
+    if (!/\d/.test(password)) {
+      errors.push('Password must include at least one number.');
+    }
+    if (!/[@$!%*?&]/.test(password)) {
+      errors.push(
+        'Password must include at least one special character (e.g., @$!%*?&).',
+      );
+    }
+
+    // Show error messages if there are any
+    if (errors.length > 0) {
+      alert(errors.join('\n'));
+      return;
+    }
+
+    // Check if passwords match
     if (password !== confirmPassword) {
       alert('Passwords do not match!');
       return;
@@ -75,23 +103,23 @@ export default function SignupPage() {
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
               />
-              <Input
+              <Input.Password
                 size="large"
                 placeholder="Нууц үгээ оруулна уу!"
                 prefix={<KeyOutlined />}
                 className={styles.input}
-                type="password"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
+                visibilityToggle
               />
-              <Input
+              <Input.Password
                 size="large"
                 placeholder="Нууц үгээ дахин оруулна уу!"
                 prefix={<KeyOutlined />}
                 className={styles.input}
-                type="password"
                 value={confirmPassword}
                 onChange={(e) => setConfirmPassword(e.target.value)}
+                visibilityToggle
               />
               <Button
                 type="primary"

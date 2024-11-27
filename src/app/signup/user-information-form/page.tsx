@@ -48,23 +48,19 @@ export default function UserFormPage() {
 
       let downloadURL = null;
 
-      // Handle file upload
       if (values.profilePicture && values.profilePicture.length > 0) {
-        const file = values.profilePicture[0].originFileObj; // Get the file
+        const file = values.profilePicture[0].originFileObj;
         const fileRef = ref(
           storage,
           `profile_pictures/${user.uid}/${file.name}`,
-        ); // Storage reference
+        );
 
-        // Upload the file
         const uploadSnapshot = await uploadBytes(fileRef, file);
 
-        // Get the download URL of the uploaded file
         downloadURL = await getDownloadURL(uploadSnapshot.ref);
       }
 
-      // Save user info in Firestore
-      const userRef = doc(firestore, 'users', user.uid); // Reference to Firestore
+      const userRef = doc(firestore, 'users', user.uid);
       await setDoc(userRef, {
         gender: values.gender,
         username: values.username,
@@ -72,7 +68,8 @@ export default function UserFormPage() {
           ? values.birthDate.format('YYYY-MM-DD')
           : null,
         phoneNumber: values.phoneNumber || null,
-        profilePictureUrl: downloadURL || null, // Save the image URL
+        deliveryAddress: values.deliveryAddress,
+        profilePictureUrl: downloadURL || null,
       });
 
       setShowSuccess(true);
@@ -123,8 +120,20 @@ export default function UserFormPage() {
           <DatePicker />
         </Form.Item>
 
-        <Form.Item label="Утасны дугаараа оруулна уу: " name="phoneNumber">
+        <Form.Item
+          label="Утасны дугаараа оруулна уу: "
+          name="phoneNumber"
+          rules={[{ required: true, message: 'Утасны дугаараа  оруулна уу!' }]}
+        >
           <InputNumber style={{ width: '100%' }} />
+        </Form.Item>
+
+        <Form.Item
+          label="Хүргэлтийн хаягаа оруулна уу: "
+          name="deliveryAddress"
+          rules={[{ required: true, message: 'Хүргэлтийн хаягаа оруулна уу!' }]}
+        >
+          <Input />
         </Form.Item>
 
         <Form.Item

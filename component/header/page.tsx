@@ -22,6 +22,12 @@ import { useEffect, useState } from 'react';
 const app = initializeFirebase();
 const db = getFirestore(app);
 
+type Category = {
+  name: string;
+  id: string;
+  counter: string | number;
+};
+
 export default function Header() {
   const [collapsed, setCollapsed] = useState(true);
   const [categories, setCategories] = useState<DocumentData[]>([]);
@@ -31,13 +37,36 @@ export default function Header() {
       try {
         const categoriesCol = collection(db, 'Product categories');
         const categorySnapshot = await getDocs(categoriesCol);
-        const categoryData = categorySnapshot.docs.map((doc) => doc.data());
-        setCategories(categoryData);
+
+        // Log raw data to inspect the structure
+        const rawCategoryData = categorySnapshot.docs.map((doc) => doc.data());
+        console.log('Raw category data: ', rawCategoryData);
+
+        // Map the raw data to the desired structure
+        const categoryData: Category[] = rawCategoryData.flatMap(
+          (categoryObject) => {
+            return Object.entries(categoryObject).map(
+              ([categoryName, categoryDetails]) => ({
+                name: categoryName,
+                id: categoryDetails.id,
+                counter: categoryDetails.counter,
+              }),
+            );
+          },
+        );
+
+        // Sort categories alphabetically by name
+        const sortedCategories = categoryData.sort((a, b) =>
+          a.name.localeCompare(b.name),
+        );
+
+        // Set the categories state
+        setCategories(sortedCategories);
+        console.log('Processed and sorted category data: ', sortedCategories);
       } catch (error) {
         console.error('Error fetching categories:', error);
       }
     };
-
     fetchCategories();
   }, []);
 
@@ -78,7 +107,11 @@ export default function Header() {
                 className={styles.categoryItem}
               >
                 {Object.entries(category).map(([categoryName]) => (
-                  <button key={categoryName} className={styles.categoryItem}>
+                  <button
+                    key={categoryName}
+                    className={styles.categoryItem}
+                    onClick={() => setCollapsed(collapsed!)}
+                  >
                     <h2>{categoryName}</h2>
                   </button>
                 ))}
@@ -87,9 +120,10 @@ export default function Header() {
           ))}
         </div>
 
-        <div
+        <button
           className={`${styles.background} ${collapsed ? styles.hiddenback : ''}`}
-        ></div>
+          onClick={toggleCollapsed}
+        ></button>
 
         <p className={styles.title}>SHOP NAME</p>
         <div className={styles.con1}>

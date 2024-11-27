@@ -28,7 +28,7 @@ const firestore = getFirestore(app);
 type Category = {
   name: string;
   id: string;
-  counter: string | number; // Assuming counter can be both number and string
+  counter: string | number;
 };
 
 export default function Mainheader() {
@@ -90,9 +90,14 @@ export default function Mainheader() {
           },
         );
 
+        // Sort categories alphabetically by name
+        const sortedCategories = categoryData.sort((a, b) =>
+          a.name.localeCompare(b.name),
+        );
+
         // Set the categories state
-        setCategories(categoryData);
-        console.log('Processed category data: ', categoryData);
+        setCategories(sortedCategories);
+        console.log('Processed and sorted category data: ', sortedCategories);
       } catch (error) {
         console.error('Error fetching categories:', error);
       }
@@ -181,9 +186,10 @@ export default function Mainheader() {
           ))}
         </div>
 
-        <div
+        <button
           className={`${styles.background} ${collapsed ? styles.hiddenback : ''}`}
-        ></div>
+          onClick={toggleCollapsed}
+        ></button>
 
         <p className={styles.title} onClick={() => router.push('/homepage')}>
           SHOP NAME

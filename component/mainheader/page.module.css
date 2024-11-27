@@ -433,10 +433,11 @@
     left: 0;
     width: 100vw;
     height: 100vh;
-    background-color: rgba(0, 0, 0, 0.5); /* Adjust opacity as needed */
-    z-index: 999; /* Ensure it appears below the menu */
+    background-color: rgba(0, 0, 0, 0.5);
+    z-index: 999;
     display: block;
     transition: opacity 0.3s ease;
+    border: none;
   }
   .hiddenback {
     opacity: 0;

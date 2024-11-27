@@ -5,8 +5,8 @@ import { getFirestore, doc, getDoc, updateDoc } from 'firebase/firestore';
 import { initializeFirebase } from '../../../lib/firebaseClient';
 import Image from 'next/image';
 import {
+  CalendarOutlined,
   CloseOutlined,
-  CreditCardOutlined,
   EditOutlined,
   MailOutlined,
   PhoneOutlined,
@@ -24,7 +24,7 @@ export default function ProfilePage() {
   const [username, setUsername] = useState<string>('');
   const [address, setAddress] = useState<string>('');
   const [phoneNumber, setPhoneNumber] = useState<string>('');
-  const [creditCardInfo, setCreditCardInfo] = useState<string>('');
+  const [dob, setDob] = useState<string>('');
   const [email, setEmail] = useState<string>('');
   const [isEditing, setIsEditing] = useState<boolean>(false);
   const [showPhotoUpload, setShowPhotoUpload] = useState<boolean>(false);
@@ -40,9 +40,9 @@ export default function ProfilePage() {
       const userDoc = await getDoc(userDocRef);
       if (userDoc.exists()) {
         const userData = userDoc.data();
-        setAddress(userData?.address || 'No address');
+        setAddress(userData?.deliveryAddress || 'No address');
         setPhoneNumber(userData?.phoneNumber || 'No phone number');
-        setCreditCardInfo(userData?.creditCardInfo || 'No credit card info');
+        setDob(userData?.birthDate || 'No credit card info');
         setEmail(userData?.email || user.email || 'No email');
         setUsername(userData?.username || user.username || 'No username');
         setLoading(false);
@@ -218,9 +218,9 @@ export default function ProfilePage() {
             <div className={styles['outer-container']}>
               <div className={styles['info-section']}>
                 <div className={styles['icon-section']}>
-                  <CreditCardOutlined />
+                  <CalendarOutlined />
                 </div>
-                <div className={styles['info-text']}>{creditCardInfo}</div>
+                <div className={styles['info-text']}>{dob}</div>
               </div>
               <button className={styles['edit-btn-of-info']}>
                 <EditOutlined />

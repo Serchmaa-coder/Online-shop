@@ -85,14 +85,15 @@ export default function CatalogPage() {
 
         setProducts(allProducts);
 
-        if (categoryId) {
-          const filtered = allProducts.filter(
-            (product) => product.CategoryId === categoryId,
-          );
-          setFilteredProducts(filtered);
-        } else {
-          setFilteredProducts(allProducts); // Show all products if no categoryId
-        }
+        // Filter products based on categoryId if provided
+        let filtered = categoryId
+          ? allProducts.filter((product) => product.CategoryId === categoryId)
+          : allProducts;
+
+        // Sort filtered products by price in ascending order
+        filtered = filtered.sort((a, b) => a.Price - b.Price);
+
+        setFilteredProducts(filtered);
       } catch (error) {
         console.error('Error fetching products:', error);
       } finally {
