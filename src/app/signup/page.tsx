@@ -90,13 +90,13 @@ export default function SignupPage() {
     <div className={styles.signupContainer}>
       <Form form={form} onFinish={handleSubmit} layout="vertical">
         <div className={styles['big-container']}>
-          <h1 className={styles.title}>SignUp</h1>
+          <h1 className={styles.title}>Sign Up</h1>
 
           <main className={styles.main}>
             <div className={styles.container}>
               <Input
                 size="large"
-                placeholder="Майл хаягаа оруулна уу!"
+                placeholder="Enter your email account!"
                 prefix={<MailOutlined />}
                 className={styles.input}
                 type="email"
@@ -105,7 +105,7 @@ export default function SignupPage() {
               />
               <Input.Password
                 size="large"
-                placeholder="Нууц үгээ оруулна уу!"
+                placeholder="Enter a new password!"
                 prefix={<KeyOutlined />}
                 className={styles.input}
                 value={password}
@@ -114,7 +114,7 @@ export default function SignupPage() {
               />
               <Input.Password
                 size="large"
-                placeholder="Нууц үгээ дахин оруулна уу!"
+                placeholder="Repeat your password again!"
                 prefix={<KeyOutlined />}
                 className={styles.input}
                 value={confirmPassword}
@@ -126,7 +126,7 @@ export default function SignupPage() {
                 className={styles.submitBtn}
                 htmlType="submit"
               >
-                <UserAddOutlined /> Бүртгүүлэх
+                <UserAddOutlined /> Submit
               </Button>
             </div>
           </main>

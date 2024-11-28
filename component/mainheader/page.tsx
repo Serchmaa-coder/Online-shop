@@ -36,10 +36,13 @@ export default function Mainheader() {
   const [profilePhoto, setProfilePhoto] = useState<string | null>(null);
   const [collapsed, setCollapsed] = useState(true);
   const [categories, setCategories] = useState<DocumentData[]>([]);
+  const [totalPrice, setTotalPrice] = useState<number>(0);
+  const [userId, setUserId] = useState<string | null>(null);
 
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, async (user) => {
       if (user) {
+        setUserId(user.uid);
         if (user.photoURL) {
           setProfilePhoto(user.photoURL);
         } else {
@@ -108,6 +111,31 @@ export default function Mainheader() {
   const toggleCollapsed = () => {
     setCollapsed(!collapsed);
   };
+
+  const fetchCartTotal = async () => {
+    try {
+      if (!userId) return;
+
+      const userCartRef = collection(db, 'cart', userId, 'products');
+      const snapshot = await getDocs(userCartRef);
+
+      const total = snapshot.docs.reduce((sum, doc) => {
+        const data = doc.data();
+        const productPrice = data.price || 0;
+        const productQuantity = data.quantity || 1;
+
+        return sum + productPrice * productQuantity;
+      }, 0);
+
+      // Update state
+      setTotalPrice(total);
+    } catch (error) {
+      console.error('Error calculating total price:', error);
+    }
+  };
+  useEffect(() => {
+    fetchCartTotal();
+  }, [userId]);
 
   const items: MenuProps['items'] = [
     {
@@ -197,7 +225,12 @@ export default function Mainheader() {
 
         <div className={styles.con1}>
           <div className={styles['cart-section']}>
-            <div className={styles['order-money']}></div>
+            <input
+              className={styles['order-money']}
+              value={`${totalPrice.toLocaleString('mn-MN')} ₮`}
+              readOnly
+            />
+
             <button className={styles['btn-cart']}>
               <ShoppingCartOutlined className={styles.icon1} />
             </button>

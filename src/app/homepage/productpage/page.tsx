@@ -31,6 +31,7 @@ export default function ProductPage() {
   const [selectedColor, setSelectedColor] = useState<string | null>(null);
   const [selectedImage, setSelectedImage] = useState<string | null>(null);
   const [userId, setUserId] = useState<string | null>(null);
+  // const [translatedName, setTranslatedName] = useState<string | null>(null); // Add state for translated name
 
   const searchParams = useSearchParams();
   const productId = searchParams.get('productId');
@@ -48,10 +49,6 @@ export default function ProductPage() {
   }, []);
 
   useEffect(() => {
-    console.log('Product ID from URL:', productId);
-  }, [productId]);
-
-  useEffect(() => {
     const fetchProduct = async () => {
       if (!productId) return;
 
@@ -65,13 +62,9 @@ export default function ProductPage() {
           }));
         });
 
-        console.log('Fetched products:', products);
-
         const selectedProduct = products.find(
           (item) => item.ProductId === productId,
         );
-
-        console.log('Selected product:', selectedProduct);
 
         if (selectedProduct) {
           setProduct(selectedProduct);
@@ -94,23 +87,50 @@ export default function ProductPage() {
 
     try {
       const payload = {
-        userId,
         productId: product.ProductId,
         name: product.Name,
         price: product.Price,
         size: selectedSize || product.Size[0],
         color: selectedColor || product.Color[0],
         quantity,
+        images: product.Images,
+        rating: product.Rating,
+        bought: collectionName === 'cart' ? false : undefined,
       };
 
-      console.log('Payload:', payload);
-      await addDoc(collection(db, collectionName), payload);
+      const userCartRef = collection(db, collectionName, userId, 'products');
+      await addDoc(userCartRef, payload);
 
       alert(`Added to ${collectionName}!`);
     } catch (error) {
       console.error(`Error adding to ${collectionName}:`, error);
     }
   };
+
+  // const handleTranslate = async () => {
+  //   if (product) {
+  //     try {
+  //       const response = await fetch('/api/translate', {
+  //         method: 'POST',
+  //         headers: {
+  //           'Content-Type': 'application/json',
+  //         },
+  //         body: JSON.stringify({ text: product.Name, targetLanguage: 'mn' }),
+  //       });
+
+  //       if (response.ok) {
+  //         const data = await response.json();
+  //         // Safely access translations and check for null/undefined
+  //         const translatedText = data.translatedText || 'Translation failed'; // Default text if null/undefined
+  //         setTranslatedName(translatedText);
+  //       } else {
+  //         console.error('Error translating product name:', response.statusText);
+  //       }
+  //     } catch (error) {
+  //       console.error('Error translating product name:', error);
+  //     }
+  //   }
+  // };
 
   if (!product) {
     return <p>Loading...</p>;
@@ -147,7 +167,14 @@ export default function ProductPage() {
       <div className={styles['information-section']}>
         <div className={styles.con}>
           <p className={styles.title}>Product name</p>
-          <h1 className={styles.info}>{product.Name}</h1>
+          <h1 className={styles.info}>{product.Name}</h1>{' '}
+          {/* Show translated name if available */}
+        </div>
+        <div className={styles.con}>
+          <p className={styles.title}>Product price</p>
+          <h3
+            className={styles.info}
+          >{`${product.Price.toLocaleString('mn-MN')} ₮`}</h3>
         </div>
         <div className={styles.con}>
           <p className={styles.title}>Colors</p>
@@ -211,6 +238,12 @@ export default function ProductPage() {
         >
           Cart
         </button>
+        {/* <button
+          className={styles.btn}
+          onClick={handleTranslate} // Translate when clicked
+        >
+          Translate to Mongolian language
+        </button> */}
       </div>
     </div>
   );

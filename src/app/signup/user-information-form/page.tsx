@@ -93,51 +93,51 @@ export default function UserFormPage() {
         onFinish={handleSubmit}
       >
         <Form.Item
-          label="Хүйсээ сонгоно уу: "
+          label="Chooose your gender: "
           name="gender"
-          rules={[{ required: true, message: 'Хүйсээ сонгоно уу!' }]}
+          rules={[{ required: true, message: 'Must chooose one!' }]}
         >
           <Radio.Group>
-            <Radio value="female"> Эмэгтэй </Radio>
-            <Radio value="male"> Эрэгтэй </Radio>
-            <Radio value="other"> Бусад </Radio>
+            <Radio value="female"> Female </Radio>
+            <Radio value="male"> Male </Radio>
+            <Radio value="other"> Other </Radio>
           </Radio.Group>
         </Form.Item>
 
         <Form.Item
-          label="Хэрэглэгчийн нэрээ оруулна уу: "
+          label="Enter your username: "
           name="username"
-          rules={[{ required: true, message: 'Хэрэглэгчийн нэр оруулна уу!' }]}
+          rules={[{ required: true, message: 'Must enter a username!' }]}
         >
           <Input />
         </Form.Item>
 
         <Form.Item
-          label="Төрсөн он сараа оруулна уу: "
+          label="Enter your date of birth: "
           name="birthDate"
-          rules={[{ required: true, message: 'Төрсөн он сараа оруулна уу!' }]}
+          rules={[{ required: true, message: 'Must enter a date!' }]}
         >
           <DatePicker />
         </Form.Item>
 
         <Form.Item
-          label="Утасны дугаараа оруулна уу: "
+          label="Enter phone number: "
           name="phoneNumber"
-          rules={[{ required: true, message: 'Утасны дугаараа  оруулна уу!' }]}
+          rules={[{ required: true, message: 'You must enter phone number!' }]}
         >
           <InputNumber style={{ width: '100%' }} />
         </Form.Item>
 
         <Form.Item
-          label="Хүргэлтийн хаягаа оруулна уу: "
+          label="Enter delivery address: "
           name="deliveryAddress"
-          rules={[{ required: true, message: 'Хүргэлтийн хаягаа оруулна уу!' }]}
+          rules={[{ required: true, message: 'You must enter address!' }]}
         >
           <Input />
         </Form.Item>
 
         <Form.Item
-          label="Нүүр зургаа оруулна уу: "
+          label="Enter profile photo: "
           name="profilePicture"
           valuePropName="fileList"
           getValueFromEvent={normFile}
@@ -152,7 +152,7 @@ export default function UserFormPage() {
 
         <Form.Item wrapperCol={{ offset: 8, span: 16 }}>
           <Button type="primary" className={styles.submitBtn} htmlType="submit">
-            <PlusOutlined /> Оруулах
+            <PlusOutlined /> Submit
           </Button>
         </Form.Item>
       </Form>
@@ -161,14 +161,14 @@ export default function UserFormPage() {
         <div className={styles.background}>
           <div className={styles['success-alert']}>
             <CheckCircleFilled className={styles['alert-icon']} />
-            <h3>Амжилттай бүртгэгдлээ!</h3>
+            <h3>Successfully signed up!</h3>
             <div className={styles['alert-btns']}>
               <Button
                 style={{ backgroundColor: '#10b981' }}
                 type="primary"
                 onClick={() => router.push('/login')}
               >
-                Нэвтрэх
+                Login
               </Button>
               <Button
                 onClick={() => {
@@ -176,7 +176,7 @@ export default function UserFormPage() {
                   form.resetFields();
                 }}
               >
-                Буцах
+                Dismiss
               </Button>
             </div>
           </div>

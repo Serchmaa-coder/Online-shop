@@ -343,6 +343,7 @@
     justify-content: space-evenly;
     position: fixed;
     right: 0.625vw;
+    margin-right: 12px;
   }
   .btn-wishlist {
     border: none;
@@ -392,12 +393,13 @@
   }
   .order-money {
     min-width: 80px;
-    max-width: 200px;
+    max-width: 150px;
     height: 4vh;
     background-color: white;
     border: 3px solid #0091b9;
     border-style: dotted;
     align-self: center;
+    font-size: 22px;
   }
   .search-section {
     width: 328px;

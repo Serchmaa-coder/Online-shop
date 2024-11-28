@@ -99,7 +99,7 @@ export default function LoginPage() {
             onClick={handleGoogleLogin}
             icon={<GoogleOutlined />}
           >
-            Google-ээр нэвтрэх
+            Login with your Google account
           </Button>
           <Form.Item<FieldType>
             name="email"
@@ -107,7 +107,7 @@ export default function LoginPage() {
           >
             <Input
               type="email"
-              placeholder="Имайл хаягаа оруулна уу!"
+              placeholder="Enter your email!"
               className={styles['email-input']}
               size="large"
               prefix={<MailOutlined />}
@@ -119,7 +119,7 @@ export default function LoginPage() {
             rules={[{ required: true, message: 'Please input your password!' }]}
           >
             <Input.Password
-              placeholder="Нууц үгээ оруулна уу!"
+              placeholder="Enter your password!"
               className={styles['password-input']}
               size="large"
               prefix={<LockOutlined />}
@@ -137,7 +137,7 @@ export default function LoginPage() {
               htmlType="submit"
             >
               <LoginOutlined />
-              Нэвтрэх
+              Login
             </Button>
           </Form.Item>
         </div>
