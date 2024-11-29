@@ -56,7 +56,7 @@ export default function CatalogPage() {
       } catch (error) {
         console.error('Error fetching categories:', error);
       } finally {
-        setLoadingCategories(false); // Set loadingCategories to false after fetching is complete
+        setLoadingCategories(false);
       }
     };
     fetchCategories();
@@ -85,12 +85,10 @@ export default function CatalogPage() {
 
         setProducts(allProducts);
 
-        // Filter products based on categoryId if provided
         let filtered = categoryId
           ? allProducts.filter((product) => product.CategoryId === categoryId)
           : allProducts;
 
-        // Sort filtered products by price in ascending order
         filtered = filtered.sort((a, b) => a.Price - b.Price);
 
         setFilteredProducts(filtered);
@@ -109,7 +107,6 @@ export default function CatalogPage() {
       {loadingCategories ? (
         <h1 className={styles.title}>Loading Category...</h1>
       ) : filteredProducts.length > 0 ? (
-        // Use the CategoryName from the first product in the filteredProducts list
         <h1 className={styles.title}>{filteredProducts[0].CategoryName}</h1>
       ) : (
         <h1 className={styles.title}>Category Not Found</h1>

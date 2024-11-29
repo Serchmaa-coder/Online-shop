@@ -144,7 +144,7 @@ export default function Header() {
       <div className={styles['search-section']}>
         <Input
           type="text"
-          placeholder="Хайлт хийх"
+          placeholder="Search"
           className={styles['search-input']}
           size="large"
           prefix={<SearchOutlined />}

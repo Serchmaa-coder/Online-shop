@@ -3,13 +3,7 @@ import React, { useEffect, useState } from 'react';
 import styles from './page.module.css';
 import { Spin, Card } from 'antd';
 import Image from 'next/image';
-import {
-  getFirestore,
-  collection,
-  getDocs,
-  doc,
-  writeBatch,
-} from 'firebase/firestore';
+import { getFirestore, collection, getDocs } from 'firebase/firestore';
 import { initializeFirebase } from '../../../../lib/firebaseClient';
 import Link from 'next/link';
 import { getAuth, onAuthStateChanged } from 'firebase/auth';
@@ -26,11 +20,12 @@ interface Product {
   images: string[];
 }
 
-export default function CartPage() {
+export default function OrderPage() {
   const [loading, setLoading] = useState<boolean>(true);
   const [cartData, setCartData] = useState<{ products: Product[] } | null>(
     null,
   );
+  const [priceSum, setPriceSum] = useState<number>(0);
 
   useEffect(() => {
     const auth = getAuth();
@@ -40,29 +35,30 @@ export default function CartPage() {
         try {
           setLoading(true);
 
-          const userCartRef = collection(db, 'cart', user.uid, 'products');
-          const cartSnapshot = await getDocs(userCartRef);
+          const userOrderRef = collection(db, 'orders', user.uid, 'userOrders');
+          const orderSnapshot = await getDocs(userOrderRef);
 
-          if (cartSnapshot.empty) {
-            console.warn('No cart found for this user.');
+          if (orderSnapshot.empty) {
+            console.warn('No order found for this user.');
             setCartData(null);
             setLoading(false);
             return;
           }
 
-          const cartProducts: Product[] = cartSnapshot.docs.map((doc) => {
-            const data = doc.data();
-            return {
-              productId: data.ProductId || '', // Ensure fallback for undefined fields
-              name: data.Name || 'Unknown Product',
-              price: data.Price || 0,
-              images: Array.isArray(data.Images) ? data.Images : [],
-            };
-          });
+          const cartProducts: Product[] = orderSnapshot.docs.map(
+            (doc) => doc.data() as Product,
+          );
 
           setCartData({ products: cartProducts });
+
+          // Calculate total price sum
+          const totalPrice = cartProducts.reduce(
+            (sum, product) => sum + Number(product.price), // Convert to number
+            0,
+          );
+          setPriceSum(totalPrice);
         } catch (error) {
-          console.error('Error fetching cart data:', error);
+          console.error('Error fetching order data:', error);
         } finally {
           setLoading(false);
         }
@@ -75,57 +71,9 @@ export default function CartPage() {
     return () => unsubscribe();
   }, []);
 
-  const handleOrder = async () => {
-    const auth = getAuth();
-    const user = auth.currentUser;
-
-    if (!user?.uid) {
-      console.error('User ID is required to place an order.');
-      return;
-    }
-
-    try {
-      if (!cartData?.products || cartData.products.length === 0) {
-        console.error('No products available to place an order.');
-        return;
-      }
-
-      const ordersCollectionRef = collection(
-        db,
-        'orders',
-        user.uid,
-        'userOrders',
-      );
-      const userCartRef = collection(db, 'cart', user.uid, 'products');
-      const batch = writeBatch(db);
-
-      cartData.products.forEach((product) => {
-        const orderDocRef = doc(ordersCollectionRef);
-        batch.set(orderDocRef, {
-          productId: product.productId,
-          name: product.name,
-          price: product.price,
-          images: product.images,
-          orderDate: new Date().toISOString(),
-        });
-      });
-
-      const cartProductsSnapshot = await getDocs(userCartRef);
-      cartProductsSnapshot.forEach((doc) => {
-        batch.delete(doc.ref);
-      });
-
-      await batch.commit();
-      alert('Order placed and cart cleared successfully!');
-      console.log('Order placed and cart cleared.');
-    } catch (error) {
-      console.error('Failed to place order. Please try again.');
-      console.error('Error placing order:', error);
-    }
-  };
-
   return (
     <div className={styles.con}>
+      <h1 className={styles.title}>Orders</h1>
       <div className={styles['main-container']}>
         {loading ? (
           <div className={styles['loading-container']}>
@@ -134,11 +82,11 @@ export default function CartPage() {
         ) : cartData === null ||
           !cartData.products ||
           cartData.products.length === 0 ? (
-          <p>No products in your cart.</p>
+          <p>No products in your orders.</p>
         ) : (
           <div className={styles.categories}>
-            {cartData.products.map((product, index) => (
-              <div className={styles.items} key={product.productId || index}>
+            {cartData.products.map((product) => (
+              <div className={styles.items} key={product.productId}>
                 <Link
                   href={`/homepage/productpage?productId=${product.productId}`}
                 >
@@ -151,7 +99,8 @@ export default function CartPage() {
                       flexDirection: 'column',
                     }}
                     cover={
-                      product.images && product.images.length > 0 ? (
+                      Array.isArray(product.images) &&
+                      product.images.length > 0 ? (
                         <Image
                           priority
                           className={styles.photo}
@@ -167,8 +116,6 @@ export default function CartPage() {
                             height: '250px',
                             backgroundColor: 'gray',
                             display: 'flex',
-                            alignItems: 'center',
-                            justifyContent: 'center',
                           }}
                         >
                           No Image
@@ -182,7 +129,7 @@ export default function CartPage() {
                           {product.name}
                         </span>
                       }
-                      description={`Price: ${product.price.toLocaleString('mn-MN')} ₮`}
+                      description={`Price: ${Intl.NumberFormat('en-US', { maximumFractionDigits: 0 }).format(product.price)}₮`}
                     />
                   </Card>
                 </Link>
@@ -191,10 +138,12 @@ export default function CartPage() {
           </div>
         )}
       </div>
-      <div className={styles.foother}>
-        <button className={styles.btn} onClick={handleOrder}>
-          Order
-        </button>
+      <div className={styles.footer}>
+        <input
+          className={styles.priceSum}
+          value={`Price sum: ${Intl.NumberFormat('en-US', { maximumFractionDigits: 0 }).format(priceSum)}₮`}
+          readOnly
+        />
       </div>
     </div>
   );

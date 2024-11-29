@@ -115,8 +115,8 @@
     margin-right: 10px;
   }
   .image-col1 img {
-    width: 106px;
-    height: 106px;
+    width: 170px;
+    height: 170px;
     cursor: pointer;
     border: none;
   }
@@ -151,6 +151,7 @@
     padding: 10px;
     border-style: dashed;
     background-color: none;
+    font-size: 22px;
   }
   .size-choice:hover {
     cursor: pointer;
@@ -160,6 +161,7 @@
     border: 3px solid #004e9b;
     padding: 10px;
     border-style: dashed;
+    font-size: 22px;
   }
   .con2 {
     display: flex;
@@ -173,6 +175,7 @@
     border: 3px solid #0091b9;
     text-align: center;
     border-style: dashed;
+    font-size: 22px;
   }
   .btn:focus {
     background-color: #004e9b57;
@@ -183,5 +186,15 @@
     display: flex;
     flex-direction: row;
     gap: 10px;
+  }
+  .quantityInput {
+    width: 612px;
+    height: 40px;
+    background-color: #dcf1f7;
+    border: 3px solid #0091b9;
+    text-align: center;
+    border-style: dashed;
+    margin-bottom: 50px;
+    font-size: 22px;
   }
 }

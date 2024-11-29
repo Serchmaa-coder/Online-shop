@@ -13,7 +13,7 @@ import {
 } from '@ant-design/icons';
 import { useEffect, useState } from 'react';
 import { getAuth, signOut, onAuthStateChanged } from 'firebase/auth';
-import { DocumentData, getFirestore } from 'firebase/firestore';
+import { DocumentData, getFirestore, writeBatch } from 'firebase/firestore';
 import { collection, getDocs } from 'firebase/firestore';
 import { Dropdown, Input, MenuProps } from 'antd';
 import { initializeFirebase } from '../../lib/firebaseClient';
@@ -24,6 +24,7 @@ const app = initializeFirebase();
 const auth = getAuth(app);
 const db = getFirestore(app);
 const firestore = getFirestore(app);
+const batch = writeBatch(firestore);
 
 type Category = {
   name: string;
@@ -47,7 +48,6 @@ export default function Mainheader() {
           setProfilePhoto(user.photoURL);
         } else {
           try {
-            // Fetch profilePictureUrl from Firestore
             const userRef = doc(firestore, 'users', user.uid);
             const userDoc = await getDoc(userRef);
 
@@ -92,13 +92,10 @@ export default function Mainheader() {
             );
           },
         );
-
-        // Sort categories alphabetically by name
         const sortedCategories = categoryData.sort((a, b) =>
           a.name.localeCompare(b.name),
         );
 
-        // Set the categories state
         setCategories(sortedCategories);
         console.log('Processed and sorted category data: ', sortedCategories);
       } catch (error) {
@@ -115,14 +112,16 @@ export default function Mainheader() {
   const fetchCartTotal = async () => {
     try {
       if (!userId) return;
+      console.log('h', userId);
 
       const userCartRef = collection(db, 'cart', userId, 'products');
       const snapshot = await getDocs(userCartRef);
 
       const total = snapshot.docs.reduce((sum, doc) => {
         const data = doc.data();
-        const productPrice = data.price || 0;
+        const productPrice = data.Price || 0;
         const productQuantity = data.quantity || 1;
+        console.log('h', data);
 
         return sum + productPrice * productQuantity;
       }, 0);
@@ -160,10 +159,38 @@ export default function Mainheader() {
           <LogoutOutlined className={styles['item-icon']} />
           <button
             className={styles['dropdown-btn']}
-            onClick={() => {
-              signOut(auth).catch((error) => {
-                console.error('Logout error', error);
-              });
+            onClick={async () => {
+              if (userId) {
+                try {
+                  const userCartRef = collection(
+                    db,
+                    'cart',
+                    userId,
+                    'products',
+                  );
+                  const cartProductsSnapshot = await getDocs(userCartRef);
+
+                  if (!cartProductsSnapshot.empty) {
+                    cartProductsSnapshot.forEach((doc) => {
+                      batch.delete(doc.ref);
+                    });
+
+                    await batch.commit();
+                    console.log('Cart products deleted successfully.');
+                  }
+                } catch (error) {
+                  console.error('Error deleting cart products:', error);
+                }
+              }
+
+              // Proceed with signOut
+              signOut(auth)
+                .then(() => {
+                  console.log('User logged out successfully.');
+                })
+                .catch((error) => {
+                  console.error('Logout error:', error);
+                });
             }}
           >
             Logout
@@ -261,7 +288,7 @@ export default function Mainheader() {
       <div className={styles['search-section']}>
         <Input
           type="text"
-          placeholder="Хайлт хийх"
+          placeholder="Search"
           className={styles['search-input']}
           size="large"
           prefix={<SearchOutlined />}
