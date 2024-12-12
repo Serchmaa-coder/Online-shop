@@ -12,6 +12,7 @@ import {
   addDoc,
   doc,
   updateDoc,
+  setDoc,
 } from 'firebase/firestore';
 import { getAuth, onAuthStateChanged } from 'firebase/auth';
 
@@ -150,10 +151,18 @@ export default function ProductPage() {
     }
 
     try {
-      await handleAddToCollection(product, userId, 'orders');
+      const userOrderDocRef = doc(db, 'orders', userId, 'userOrders');
+      await setDoc(userOrderDocRef, { bought: true });
 
-      const cartDocRef = doc(db, 'cart', userId, 'products', product.ProductID);
-      await updateDoc(cartDocRef, { bought: true });
+      const userProductsRef = collection(db, 'orders', userId, 'products');
+      const productPayload = {
+        ...product,
+        quantity,
+        selectedSize,
+        selectedColor,
+        selectedOption,
+      };
+      await addDoc(userProductsRef, productPayload);
 
       alert('Order placed successfully!');
     } catch (error) {
@@ -280,14 +289,12 @@ export default function ProductPage() {
           />
         </div>
         <div className={styles.btns}>
-          <button className={styles.btn} onClick={handleOrder}>
+          <button className={styles.btn} onClick={() => handleOrder()}>
             Order
           </button>
           <button
             className={styles.btn}
-            onClick={() =>
-              handleAddToCollection(product, userId!, 'cart', { bought: false })
-            }
+            onClick={() => handleAddToCollection(product, userId!, 'cart')}
           >
             Add to Cart
           </button>
