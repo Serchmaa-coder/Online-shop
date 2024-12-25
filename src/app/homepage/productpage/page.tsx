@@ -27,6 +27,7 @@ type Product = {
   Rating: number;
   Size: string[];
   Color: string[];
+  Options: string[];
   Quantity: number;
   Images: string[];
   [key: string]: unknown;
@@ -37,6 +38,8 @@ export default function ProductPage() {
   const [quantity, setQuantity] = useState<number>(1);
   const [selectedSize, setSelectedSize] = useState<string | null>(null);
   const [selectedColor, setSelectedColor] = useState<string | null>(null);
+  const [selectedOption, setSelectedOption] = useState<string | null>(null);
+
   const [selectedImage, setSelectedImage] = useState<string | null>(null);
   const [userId, setUserId] = useState<string | null>(null);
   const [, setError] = useState<string | null>(null);
@@ -87,6 +90,7 @@ export default function ProductPage() {
         });
 
         console.log('Fetched products:', products);
+        console.log('Product Options:', product?.Options);
 
         const selectedProduct = products.find(
           (item) => item.ProductId === productId,
@@ -158,7 +162,7 @@ export default function ProductPage() {
   };
 
   if (!product) {
-    return <p>Loading...</p>;
+    return <div>Loading...</div>;
   }
 
   return (
@@ -171,77 +175,102 @@ export default function ProductPage() {
               key={index}
               alt={`Product image ${index}`}
               src={img}
-              layout="intrinsic"
-              width={30}
-              height={30}
+              width={185}
+              height={185}
               className={styles['image-thumbnail']}
               onClick={() => setSelectedImage(img)}
             />
           ))}
         </div>
-        <Image
-          alt="Main product image"
-          layout="intrinsic"
-          width={160}
-          height={160}
-          src={selectedImage || product.Images[0]}
-          className={styles['main-image']}
-        />
+        <div className={styles['image-wrapper']}>
+          <Image
+            alt="Main product image"
+            layout="fill"
+            src={selectedImage || product.Images[0]}
+            className={styles['main-image']}
+          />
+        </div>
       </div>
 
       <div className={styles['information-section']}>
         <div className={styles.con}>
-          <p className={styles.title}>Product name</p>
+          <div className={styles.title}>Product name</div>
           <h1 className={styles.info}>{product.Name}</h1>
         </div>
         <div className={styles.con}>
-          <p className={styles.title}>Product price</p>
+          <div className={styles.title}>Product price</div>
           <h3
             className={styles.info}
           >{`${product.Price.toLocaleString('mn-MN')} ₮`}</h3>
         </div>
-        <div className={styles.con}>
-          <p className={styles.title}>Colors</p>
-          <div className={styles.conColor}>
-            {product.Color.map((color, index) => (
-              <button
-                key={index}
-                className={`${styles['color-choice']} ${
-                  selectedColor === color ? styles.selected : ''
-                }`}
-                style={{
-                  height: '30px',
-                  width: '30px',
-                  backgroundColor: color,
-                  border: selectedColor === color ? '2px solid black' : 'none',
-                }}
-                onClick={() => setSelectedColor(color)}
-              />
-            ))}
+        {product.Color.length > 0 && (
+          <div className={styles.con}>
+            <div className={styles.title}>Colors</div>
+            <div className={styles.conColor}>
+              {product.Color.map((color, index) => (
+                <button
+                  key={index}
+                  className={`${styles['color-choice']} ${
+                    selectedColor === color ? styles.selected : ''
+                  }`}
+                  style={{
+                    height: '30px',
+                    width: '30px',
+                    backgroundColor: color,
+                    border:
+                      selectedColor === color ? '2px solid black' : 'none',
+                  }}
+                  onClick={() => setSelectedColor(color)}
+                />
+              ))}
+            </div>
           </div>
-        </div>
+        )}
+
         <div className={styles['rating-section']}>
-          <p className={styles.title}>Rating</p>
+          <div className={styles.title}>Rating</div>
           <StarFilled /> {product.Rating}
         </div>
-        <div className={styles.con}>
-          <p className={styles.title}>Size choices</p>
-          <div className={styles.con2}>
-            {product.Size.map((size, index) => (
-              <button
-                key={index}
-                onClick={() => setSelectedSize(size)}
-                className={`${styles['size-choice']} ${
-                  selectedSize === size ? styles.selected : ''
-                }`}
-              >
-                {size}
-              </button>
-            ))}
+        {product.Options.length > 0 && (
+          <div className={styles.con}>
+            <div className={styles.title}>Options</div>
+            <div className={styles.con2}>
+              {product.Options.map((option, index) => (
+                <button
+                  key={index}
+                  onClick={() => setSelectedOption(option)}
+                  className={`${styles['size-choice']} ${
+                    selectedOption === option ? styles.selected : ''
+                  }`}
+                >
+                  {option}
+                </button>
+              ))}
+            </div>
           </div>
-        </div>
+        )}
+
+        {product.Size.length > 0 && (
+          <div className={styles.con}>
+            <div className={styles.title}>Size choices</div>
+            <div className={styles.con2}>
+              {product.Size.map((size, index) => (
+                <button
+                  key={index}
+                  onClick={() => setSelectedSize(size)}
+                  className={`${styles['size-choice']} ${
+                    selectedSize === size ? styles.selected : ''
+                  }`}
+                >
+                  {size}
+                </button>
+              ))}
+            </div>
+          </div>
+        )}
+
         <div className={styles.con}>
-          <p className={styles.title}>Quantity</p>
+          <div className={styles.title}>Quantity</div>
           <input
             type="number"
             min="1"
@@ -250,17 +279,29 @@ export default function ProductPage() {
             className={styles.quantityInput}
           />
         </div>
-        <button className={styles.btn} onClick={handleOrder}>
-          Order
-        </button>
-        <button
-          className={styles.btn}
-          onClick={() =>
-            handleAddToCollection(product, userId!, 'cart', { bought: false })
-          }
-        >
-          Add to Cart
-        </button>
+        <div className={styles.btns}>
+          <button className={styles.btn} onClick={handleOrder}>
+            Order
+          </button>
+          <button
+            className={styles.btn}
+            onClick={() =>
+              handleAddToCollection(product, userId!, 'cart', { bought: false })
+            }
+          >
+            Add to Cart
+          </button>
+          <button
+            className={styles.btn}
+            onClick={() =>
+              handleAddToCollection(product, userId!, 'wishlist', {
+                bought: false,
+              })
+            }
+          >
+            Add to Wishlist
+          </button>
+        </div>
       </div>
     </div>
   );

@@ -85,7 +85,11 @@ export default function PopularCategories() {
   }, []);
 
   const navigateToCategoryPage = (categoryId: string) => {
+<<<<<<< HEAD
     const auth = getAuth(); // Initialize Firebase Authentication
+=======
+    const auth = getAuth();
+>>>>>>> 391d1e7 (a)
     onAuthStateChanged(auth, (user) => {
       const targetPath = user
         ? `/homepage/categorypage?categoryId=${categoryId}`

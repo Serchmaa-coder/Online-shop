@@ -39,11 +39,8 @@
   height: 50vh;
 }
 .btn {
-  width: auto;
-  min-width: 200px;
-  font-size: 22px;
-  max-width: 350px;
-  height: 45px;
+  width: 620px;
+  height: 60px;
   background-color: #dcf1f7;
   border: 3px solid #0091b9;
   text-align: center;
@@ -65,20 +62,4 @@
 }
 .foother {
   margin: auto;
-  display: flex;
-  flex-direction: row;
-}
-.priceSum {
-  width: auto;
-  min-width: 200px;
-  font-size: 22px;
-  max-width: 350px;
-  height: 40px;
-  background-color: white;
-  border: 3px solid #0091b9;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  margin: auto;
-  text-align: center;
 }

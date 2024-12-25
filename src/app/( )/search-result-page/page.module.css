@@ -1,0 +1,9 @@
+.main-container {
+  padding: 32px;
+  background-color: #dcf1f7;
+}
+.categories {
+  display: flex;
+  flex-direction: row;
+  gap: 32px;
+}

@@ -13,12 +13,26 @@ import {
 } from '@ant-design/icons';
 import { useEffect, useState } from 'react';
 import { getAuth, signOut, onAuthStateChanged } from 'firebase/auth';
+<<<<<<< HEAD
 import { DocumentData, getFirestore, writeBatch } from 'firebase/firestore';
+=======
+import {
+  DocumentData,
+  getFirestore,
+  writeBatch,
+  onSnapshot,
+} from 'firebase/firestore';
+>>>>>>> 391d1e7 (a)
 import { collection, getDocs } from 'firebase/firestore';
 import { Dropdown, Input, MenuProps } from 'antd';
 import { initializeFirebase } from '../../lib/firebaseClient';
 import Image from 'next/image';
 import { doc, getDoc } from 'firebase/firestore';
+<<<<<<< HEAD
+=======
+import ReactTextRotator from 'react-text-rotator';
+import Link from 'next/link';
+>>>>>>> 391d1e7 (a)
 
 const app = initializeFirebase();
 const auth = getAuth(app);
@@ -38,7 +52,24 @@ export default function Mainheader() {
   const [collapsed, setCollapsed] = useState(true);
   const [categories, setCategories] = useState<DocumentData[]>([]);
   const [totalPrice, setTotalPrice] = useState<number>(0);
+<<<<<<< HEAD
   const [userId, setUserId] = useState<string | null>(null);
+=======
+  const [messages, setMessages] = useState<DocumentData[]>([]);
+  const [userId, setUserId] = useState<string | null>(null);
+  const [query, setQuery] = useState('');
+  const [counter, setCounter] = useState(0);
+  const [wishCounter, setWishCounter] = useState(0);
+
+  const handleSearch = (e: { preventDefault: () => void }) => {
+    e.preventDefault();
+    if (query.trim()) {
+      router.push(
+        `homepage/search-result-page?query=${encodeURIComponent(query)}`,
+      );
+    }
+  };
+>>>>>>> 391d1e7 (a)
 
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, async (user) => {
@@ -50,7 +81,10 @@ export default function Mainheader() {
           try {
             const userRef = doc(firestore, 'users', user.uid);
             const userDoc = await getDoc(userRef);
+<<<<<<< HEAD
 
+=======
+>>>>>>> 391d1e7 (a)
             if (userDoc.exists()) {
               const userData = userDoc.data();
               setProfilePhoto(userData.profilePictureUrl || null);
@@ -75,12 +109,16 @@ export default function Mainheader() {
       try {
         const categoriesCol = collection(db, 'Product categories');
         const categorySnapshot = await getDocs(categoriesCol);
+<<<<<<< HEAD
 
         // Log raw data to inspect the structure
         const rawCategoryData = categorySnapshot.docs.map((doc) => doc.data());
         console.log('Raw category data: ', rawCategoryData);
 
         // Map the raw data to the desired structure
+=======
+        const rawCategoryData = categorySnapshot.docs.map((doc) => doc.data());
+>>>>>>> 391d1e7 (a)
         const categoryData: Category[] = rawCategoryData.flatMap(
           (categoryObject) => {
             return Object.entries(categoryObject).map(
@@ -97,7 +135,10 @@ export default function Mainheader() {
         );
 
         setCategories(sortedCategories);
+<<<<<<< HEAD
         console.log('Processed and sorted category data: ', sortedCategories);
+=======
+>>>>>>> 391d1e7 (a)
       } catch (error) {
         console.error('Error fetching categories:', error);
       }
@@ -109,6 +150,7 @@ export default function Mainheader() {
     setCollapsed(!collapsed);
   };
 
+<<<<<<< HEAD
   const fetchCartTotal = async () => {
     try {
       if (!userId) return;
@@ -117,10 +159,19 @@ export default function Mainheader() {
       const userCartRef = collection(db, 'cart', userId, 'products');
       const snapshot = await getDocs(userCartRef);
 
+=======
+  useEffect(() => {
+    if (!userId) return;
+
+    const userCartRef = collection(db, 'cart', userId, 'products');
+    const unsubscribe = onSnapshot(userCartRef, (snapshot) => {
+      let productCount = 0;
+>>>>>>> 391d1e7 (a)
       const total = snapshot.docs.reduce((sum, doc) => {
         const data = doc.data();
         const productPrice = data.Price || 0;
         const productQuantity = data.quantity || 1;
+<<<<<<< HEAD
         console.log('h', data);
 
         return sum + productPrice * productQuantity;
@@ -135,6 +186,31 @@ export default function Mainheader() {
   useEffect(() => {
     fetchCartTotal();
   }, [userId]);
+=======
+
+        productCount += productQuantity;
+        return sum + productPrice * productQuantity;
+      }, 0);
+
+      setTotalPrice(total);
+      setCounter(productCount);
+    });
+
+    return () => unsubscribe();
+  }, [userId, db]);
+
+  useEffect(() => {
+    if (!userId) return;
+
+    const userWishlistRef = collection(db, 'wishlist', userId, 'products');
+    const unsubscribe = onSnapshot(userWishlistRef, (snapshot) => {
+      const productCount = snapshot.size;
+      setWishCounter(productCount);
+    });
+
+    return () => unsubscribe();
+  }, [userId, db]);
+>>>>>>> 391d1e7 (a)
 
   const items: MenuProps['items'] = [
     {
@@ -156,6 +232,25 @@ export default function Mainheader() {
     {
       label: (
         <div className={styles['dropdown-items']}>
+<<<<<<< HEAD
+=======
+          <UserOutlined className={styles['item-icon']} />
+          <button
+            className={styles['dropdown-btn']}
+            onClick={() => {
+              router.push('/homepage/orderpage');
+            }}
+          >
+            Order history
+          </button>
+        </div>
+      ),
+      key: '0',
+    },
+    {
+      label: (
+        <div className={styles['dropdown-items']}>
+>>>>>>> 391d1e7 (a)
           <LogoutOutlined className={styles['item-icon']} />
           <button
             className={styles['dropdown-btn']}
@@ -183,7 +278,10 @@ export default function Mainheader() {
                 }
               }
 
+<<<<<<< HEAD
               // Proceed with signOut
+=======
+>>>>>>> 391d1e7 (a)
               signOut(auth)
                 .then(() => {
                   console.log('User logged out successfully.');
@@ -201,11 +299,87 @@ export default function Mainheader() {
     },
   ];
 
+<<<<<<< HEAD
   return (
     <div style={{ position: 'fixed', top: '0', zIndex: '1000' }}>
       <div className={styles.top}>
         <div className={styles['info-section']}>
           <p className={styles.text}>Sale info xxxxxxxxxxxx of xxxxxxxxx</p>
+=======
+  useEffect(() => {
+    const fetchMessages = async () => {
+      try {
+        const messagesCol = collection(db, 'important messages');
+        const messagesSnapshot = await getDocs(messagesCol);
+        const messagesData = messagesSnapshot.docs.map((doc) => doc.data());
+        console.log('Fetched messages: ', messagesData);
+        setMessages(messagesData);
+      } catch (error) {
+        console.error('Error fetching sale messages: ', error);
+      }
+    };
+
+    fetchMessages();
+  }, []);
+
+  const content = messages
+    .map((message) => [
+      {
+        text: message[`m01`],
+        className: 'classA',
+        animation: 'fade',
+      },
+      {
+        text: message[`m02`],
+        className: 'classB',
+        animation: 'fade',
+      },
+      {
+        text: message[`m03`],
+        className: 'classC',
+        animation: 'fade',
+      },
+    ])
+    .flat();
+
+  useEffect(() => {
+    const loadGoogleTranslate = () => {
+      if (!document.getElementById('google-translate-script')) {
+        const script = document.createElement('script');
+        script.id = 'google-translate-script';
+        script.src =
+          'https://translate.google.com/translate_a/element.js?cb=googleTranslateElementInit';
+        script.async = true;
+
+        script.onload = () => {
+          window.googleTranslateElementInit = function () {
+            new window.google.translate.TranslateElement(
+              { pageLanguage: 'en' },
+              'google_translate_element',
+            );
+          };
+        };
+
+        document.head.appendChild(script);
+      }
+    };
+
+    loadGoogleTranslate();
+  }, []);
+
+  return (
+    <div style={{ position: 'fixed', top: '0', zIndex: '1000' }}>
+      <div id="google_translate_element" className={styles.translateBtn}></div>
+      <div className={styles.top}>
+        <div className={styles['info-section']}>
+          <div className={styles.text}>
+            <ReactTextRotator
+              content={content}
+              time={100000}
+              startDelay={5000}
+            />
+          </div>
+>>>>>>> 391d1e7 (a)
         </div>
       </div>
       <nav className={styles.header}>
@@ -257,6 +431,7 @@ export default function Mainheader() {
               value={`${totalPrice.toLocaleString('mn-MN')} ₮`}
               readOnly
             />
+<<<<<<< HEAD
 
             <button className={styles['btn-cart']}>
               <ShoppingCartOutlined className={styles.icon1} />
@@ -264,6 +439,18 @@ export default function Mainheader() {
           </div>
           <button className={styles['btn-wishlist']}>
             <HeartFilled className={styles.icon2} />
+=======
+            <button className={styles['btn-cart']}>
+              <Link href="/homepage/cartpage">
+                <ShoppingCartOutlined className={styles.icon1} />
+              </Link>
+            </button>
+          </div>
+          <button className={styles['btn-wishlist']}>
+            <Link href="/homepage/wishlist-page">
+              <HeartFilled className={styles.icon2} />
+            </Link>
+>>>>>>> 391d1e7 (a)
           </button>
 
           <Dropdown menu={{ items }} trigger={['click']}>
@@ -286,6 +473,7 @@ export default function Mainheader() {
         </div>
       </nav>
       <div className={styles['search-section']}>
+<<<<<<< HEAD
         <Input
           type="text"
           placeholder="Search"
@@ -294,6 +482,33 @@ export default function Mainheader() {
           prefix={<SearchOutlined />}
         />
       </div>
+=======
+        <form onSubmit={handleSearch}>
+          <Input
+            type="text"
+            placeholder="Search.."
+            value={query}
+            onChange={(e) => setQuery(e.target.value)}
+            className={styles['search-input']}
+          />
+          <button type="submit" className={styles.searchBtn}>
+            <SearchOutlined />
+            <i className="fa fa-search"></i>
+          </button>
+        </form>
+      </div>
+      {counter != 0 ? (
+        <div className={styles['cart-count']}>{counter}</div>
+      ) : (
+        <div></div>
+      )}
+
+      {wishCounter != 0 ? (
+        <div className={styles['wish-count']}>{wishCounter}</div>
+      ) : (
+        <div></div>
+      )}
+>>>>>>> 391d1e7 (a)
     </div>
   );
 }
