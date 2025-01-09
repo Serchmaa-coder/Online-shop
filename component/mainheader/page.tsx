@@ -13,26 +13,19 @@ import {
 } from '@ant-design/icons';
 import { useEffect, useState } from 'react';
 import { getAuth, signOut, onAuthStateChanged } from 'firebase/auth';
-<<<<<<< HEAD
-import { DocumentData, getFirestore, writeBatch } from 'firebase/firestore';
-=======
 import {
   DocumentData,
   getFirestore,
   writeBatch,
   onSnapshot,
 } from 'firebase/firestore';
->>>>>>> 391d1e7 (a)
 import { collection, getDocs } from 'firebase/firestore';
 import { Dropdown, Input, MenuProps } from 'antd';
 import { initializeFirebase } from '../../lib/firebaseClient';
 import Image from 'next/image';
 import { doc, getDoc } from 'firebase/firestore';
-<<<<<<< HEAD
-=======
 import ReactTextRotator from 'react-text-rotator';
 import Link from 'next/link';
->>>>>>> 391d1e7 (a)
 
 const app = initializeFirebase();
 const auth = getAuth(app);
@@ -52,9 +45,6 @@ export default function Mainheader() {
   const [collapsed, setCollapsed] = useState(true);
   const [categories, setCategories] = useState<DocumentData[]>([]);
   const [totalPrice, setTotalPrice] = useState<number>(0);
-<<<<<<< HEAD
-  const [userId, setUserId] = useState<string | null>(null);
-=======
   const [messages, setMessages] = useState<DocumentData[]>([]);
   const [userId, setUserId] = useState<string | null>(null);
   const [query, setQuery] = useState('');
@@ -69,7 +59,6 @@ export default function Mainheader() {
       );
     }
   };
->>>>>>> 391d1e7 (a)
 
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, async (user) => {
@@ -81,10 +70,6 @@ export default function Mainheader() {
           try {
             const userRef = doc(firestore, 'users', user.uid);
             const userDoc = await getDoc(userRef);
-<<<<<<< HEAD
-
-=======
->>>>>>> 391d1e7 (a)
             if (userDoc.exists()) {
               const userData = userDoc.data();
               setProfilePhoto(userData.profilePictureUrl || null);
@@ -109,16 +94,7 @@ export default function Mainheader() {
       try {
         const categoriesCol = collection(db, 'Product categories');
         const categorySnapshot = await getDocs(categoriesCol);
-<<<<<<< HEAD
-
-        // Log raw data to inspect the structure
         const rawCategoryData = categorySnapshot.docs.map((doc) => doc.data());
-        console.log('Raw category data: ', rawCategoryData);
-
-        // Map the raw data to the desired structure
-=======
-        const rawCategoryData = categorySnapshot.docs.map((doc) => doc.data());
->>>>>>> 391d1e7 (a)
         const categoryData: Category[] = rawCategoryData.flatMap(
           (categoryObject) => {
             return Object.entries(categoryObject).map(
@@ -135,10 +111,6 @@ export default function Mainheader() {
         );
 
         setCategories(sortedCategories);
-<<<<<<< HEAD
-        console.log('Processed and sorted category data: ', sortedCategories);
-=======
->>>>>>> 391d1e7 (a)
       } catch (error) {
         console.error('Error fetching categories:', error);
       }
@@ -150,43 +122,16 @@ export default function Mainheader() {
     setCollapsed(!collapsed);
   };
 
-<<<<<<< HEAD
-  const fetchCartTotal = async () => {
-    try {
-      if (!userId) return;
-      console.log('h', userId);
-
-      const userCartRef = collection(db, 'cart', userId, 'products');
-      const snapshot = await getDocs(userCartRef);
-
-=======
   useEffect(() => {
     if (!userId) return;
 
     const userCartRef = collection(db, 'cart', userId, 'products');
     const unsubscribe = onSnapshot(userCartRef, (snapshot) => {
       let productCount = 0;
->>>>>>> 391d1e7 (a)
       const total = snapshot.docs.reduce((sum, doc) => {
         const data = doc.data();
         const productPrice = data.Price || 0;
         const productQuantity = data.quantity || 1;
-<<<<<<< HEAD
-        console.log('h', data);
-
-        return sum + productPrice * productQuantity;
-      }, 0);
-
-      // Update state
-      setTotalPrice(total);
-    } catch (error) {
-      console.error('Error calculating total price:', error);
-    }
-  };
-  useEffect(() => {
-    fetchCartTotal();
-  }, [userId]);
-=======
 
         productCount += productQuantity;
         return sum + productPrice * productQuantity;
@@ -210,7 +155,6 @@ export default function Mainheader() {
 
     return () => unsubscribe();
   }, [userId, db]);
->>>>>>> 391d1e7 (a)
 
   const items: MenuProps['items'] = [
     {
@@ -232,8 +176,6 @@ export default function Mainheader() {
     {
       label: (
         <div className={styles['dropdown-items']}>
-<<<<<<< HEAD
-=======
           <UserOutlined className={styles['item-icon']} />
           <button
             className={styles['dropdown-btn']}
@@ -250,7 +192,6 @@ export default function Mainheader() {
     {
       label: (
         <div className={styles['dropdown-items']}>
->>>>>>> 391d1e7 (a)
           <LogoutOutlined className={styles['item-icon']} />
           <button
             className={styles['dropdown-btn']}
@@ -277,11 +218,6 @@ export default function Mainheader() {
                   console.error('Error deleting cart products:', error);
                 }
               }
-
-<<<<<<< HEAD
-              // Proceed with signOut
-=======
->>>>>>> 391d1e7 (a)
               signOut(auth)
                 .then(() => {
                   console.log('User logged out successfully.');
@@ -299,13 +235,6 @@ export default function Mainheader() {
     },
   ];
 
-<<<<<<< HEAD
-  return (
-    <div style={{ position: 'fixed', top: '0', zIndex: '1000' }}>
-      <div className={styles.top}>
-        <div className={styles['info-section']}>
-          <p className={styles.text}>Sale info xxxxxxxxxxxx of xxxxxxxxx</p>
-=======
   useEffect(() => {
     const fetchMessages = async () => {
       try {
@@ -379,7 +308,6 @@ export default function Mainheader() {
               startDelay={5000}
             />
           </div>
->>>>>>> 391d1e7 (a)
         </div>
       </div>
       <nav className={styles.header}>
@@ -431,15 +359,6 @@ export default function Mainheader() {
               value={`${totalPrice.toLocaleString('mn-MN')} ₮`}
               readOnly
             />
-<<<<<<< HEAD
-
-            <button className={styles['btn-cart']}>
-              <ShoppingCartOutlined className={styles.icon1} />
-            </button>
-          </div>
-          <button className={styles['btn-wishlist']}>
-            <HeartFilled className={styles.icon2} />
-=======
             <button className={styles['btn-cart']}>
               <Link href="/homepage/cartpage">
                 <ShoppingCartOutlined className={styles.icon1} />
@@ -450,7 +369,6 @@ export default function Mainheader() {
             <Link href="/homepage/wishlist-page">
               <HeartFilled className={styles.icon2} />
             </Link>
->>>>>>> 391d1e7 (a)
           </button>
 
           <Dropdown menu={{ items }} trigger={['click']}>
@@ -473,16 +391,6 @@ export default function Mainheader() {
         </div>
       </nav>
       <div className={styles['search-section']}>
-<<<<<<< HEAD
-        <Input
-          type="text"
-          placeholder="Search"
-          className={styles['search-input']}
-          size="large"
-          prefix={<SearchOutlined />}
-        />
-      </div>
-=======
         <form onSubmit={handleSearch}>
           <Input
             type="text"
@@ -508,7 +416,6 @@ export default function Mainheader() {
       ) : (
         <div></div>
       )}
->>>>>>> 391d1e7 (a)
     </div>
   );
 }

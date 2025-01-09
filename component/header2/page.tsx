@@ -1,13 +1,3 @@
-<<<<<<< HEAD
-import styles from './page.module.css';
-
-export default function HeaderOfAuthentication() {
-  return (
-    <div>
-      <div className={styles.top}>
-        <div className={styles['info-section']}>
-          <p className={styles.text}>Sale info xxxxxxxxxxxx of xxxxxxxxx</p>
-=======
 'use client';
 import { useEffect, useState } from 'react';
 import styles from './page.module.css';
@@ -93,7 +83,6 @@ export default function HeaderOfAuthentication() {
               startDelay={5000}
             />
           </div>
->>>>>>> 391d1e7 (a)
         </div>
       </div>
       <div className={styles.header}>

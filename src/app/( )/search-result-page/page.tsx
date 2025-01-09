@@ -72,14 +72,14 @@ export default function SearchResultPage() {
   return (
     <div className={styles['main-container']}>
       <h1 className={styles.title}>
-        Search Results for "{query || 'All Products'}"
+        Search Results for {query || 'All Products'}
       </h1>
       {loading ? (
         <div className={styles['loading-container']}>
           <Spin size="large" />
         </div>
       ) : filteredProducts.length === 0 ? (
-        <p>No products found matching "{query}".</p>
+        <p>No products found matching {query}</p>
       ) : (
         <div className={styles.categories}>
           {filteredProducts.map((product) => (

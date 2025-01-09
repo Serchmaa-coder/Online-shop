@@ -1,6 +1,5 @@
 'use client';
 import styles from './page.module.css';
-import { div } from 'framer-motion/client';
 
 export default function Footer() {
   return (

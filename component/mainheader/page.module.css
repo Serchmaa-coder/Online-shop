@@ -147,11 +147,7 @@
     position: inherit;
   }
   .search-input {
-<<<<<<< HEAD
-    background-color: #0091b9a4;
-=======
     background-color: #64b4d4;
->>>>>>> 391d1e7 (a)
     border-radius: 6px;
   }
   .menu {
@@ -208,29 +204,6 @@
 @media only screen and (min-width: 768px) {
   .top {
     display: flex;
-<<<<<<< HEAD
-    min-width: none;
-    min-height: 40px;
-    max-width: 100vw;
-    min-width: 1800px;
-    background-color: #1a4848;
-    display: flex;
-    align-items: center;
-  }
-  .info-section {
-    display: flex;
-    max-width: 80vw;
-    width: 1200px;
-    font-size: 2.5vh;
-    max-height: 2.5vh;
-    align-items: center;
-    align-content: center;
-  }
-  .text {
-    font-size: 2.5vh;
-    position: fixed;
-    left: 40vw;
-=======
     height: 40px;
     max-width: 100vw;
     background-color: #1a4848;
@@ -240,50 +213,10 @@
   }
   .text {
     font-size: 2.5vh;
->>>>>>> 391d1e7 (a)
     color: white;
     font-weight: 200;
     font-family: Arial, Helvetica, sans-serif;
   }
-<<<<<<< HEAD
-  .btns {
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    padding-right: 1.667vw;
-    position: fixed;
-    left: 85vw;
-    right: 0.625vw;
-    font-family: Arial, Helvetica, sans-serif;
-  }
-  .btn-login {
-    background-color: #1a4848;
-    font-size: 2.5vh;
-    border: none;
-    box-shadow: none;
-    font-weight: bold;
-  }
-  .btn-login:hover {
-    cursor: pointer;
-  }
-  .divider {
-    font-size: 2.5vh;
-    padding: 10px;
-    font-weight: bold;
-  }
-  .btn-signup {
-    background-color: #1a4848;
-    font-size: 2.5vh;
-    border: none;
-    box-shadow: none;
-    font-weight: bold;
-  }
-  .btn-signup:hover {
-    cursor: pointer;
-  }
-=======
->>>>>>> 391d1e7 (a)
-
   .header {
     max-width: 100vw;
     min-width: 1800px;
@@ -421,22 +354,12 @@
     font-size: 22px;
   }
   .search-section {
-<<<<<<< HEAD
-=======
     display: flex;
->>>>>>> 391d1e7 (a)
     width: 328px;
     margin-top: 12px;
     position: inherit;
     right: 0;
     margin-right: 32px;
-<<<<<<< HEAD
-  }
-  .search-input {
-    background-color: #0091b9a4;
-    border-radius: 0px;
-  }
-=======
     align-items: center;
     align-self: center;
     align-content: center;
@@ -470,7 +393,6 @@
       opacity: 0;
     }
   }
->>>>>>> 391d1e7 (a)
   .menu {
     position: absolute;
     left: 0px;
@@ -518,8 +440,6 @@
     background-color: white;
     border: 3px solid #1a4848;
   }
-<<<<<<< HEAD
-=======
   .translateBtn {
     background-color: #64b4d4;
     display: flex;
@@ -548,5 +468,4 @@
     background-color: white;
     text-align: center;
   }
->>>>>>> 391d1e7 (a)
 }

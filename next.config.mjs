@@ -12,6 +12,7 @@ const nextConfig = {
       'www.reddit.com',
       'preview.redd.it',
       'pbs.twimg.com',
+      'via.placeholder.com',
     ],
   },
 };

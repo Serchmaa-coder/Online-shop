@@ -1,42 +1,23 @@
 @media only screen and (max-width: 768px) {
   .top {
     display: flex;
-<<<<<<< HEAD
-    height: 20px;
-    width: 392px;
-    background-color: #1a4848;
-    align-items: center;
-    padding: 10px;
-=======
     min-width: none;
     min-height: 40px;
     width: calc(1800px - (1800px - 100vw));
     max-width: 100%;
     background-color: #1a4848;
     align-items: center;
->>>>>>> 391d1e7 (a)
   }
   .info-section {
     display: flex;
     max-width: 80vw;
-<<<<<<< HEAD
-    width: 392px;
-=======
     width: 1200px;
->>>>>>> 391d1e7 (a)
     font-size: 2.5vh;
     max-height: 2.5vh;
     align-items: center;
     align-content: center;
   }
   .text {
-<<<<<<< HEAD
-    font-size: 14px;
-    position: fixed;
-    left: 50px;
-    color: white;
-    font-weight: 200;
-=======
     font-size: calc(1vh + 0.5vw);
     position: fixed;
     left: 10%;
@@ -45,33 +26,22 @@
     color: white;
     font-weight: 200;
     white-space: normal;
->>>>>>> 391d1e7 (a)
     font-family: Arial, Helvetica, sans-serif;
   }
   .btns {
     display: flex;
     flex-direction: row;
     align-items: center;
-<<<<<<< HEAD
-    padding-right: 12px;
-    position: fixed;
-    left: 275px;
-=======
     padding-right: 32px;
     position: fixed;
     left: 99%;
     transform: translateX(-99%);
->>>>>>> 391d1e7 (a)
     font-family: Arial, Helvetica, sans-serif;
     color: white;
   }
   .btn-login {
     background-color: #1a4848;
-<<<<<<< HEAD
-    font-size: 16px;
-=======
     font-size: 2.5vh;
->>>>>>> 391d1e7 (a)
     border: none;
     box-shadow: none;
     font-weight: bold;
@@ -81,22 +51,14 @@
     cursor: pointer;
   }
   .divider {
-<<<<<<< HEAD
-    font-size: 16px;
-=======
     font-size: 2.5vh;
->>>>>>> 391d1e7 (a)
     padding: 10px;
     font-weight: bold;
     color: white;
   }
   .btn-signup {
     background-color: #1a4848;
-<<<<<<< HEAD
-    font-size: 16px;
-=======
     font-size: 2.5vh;
->>>>>>> 391d1e7 (a)
     border: none;
     box-shadow: none;
     font-weight: bold;
@@ -105,39 +67,16 @@
   .btn-signup:hover {
     cursor: pointer;
   }
-<<<<<<< HEAD
-  .header {
-    width: 392px;
-    height: 80px;
-=======
 
   .header {
     max-width: 100%;
     min-width: 768px;
     height: 160px;
->>>>>>> 391d1e7 (a)
     background-color: #ffd500;
     display: flex;
     flex-direction: row;
     align-items: center;
     justify-content: space-between;
-<<<<<<< HEAD
-    padding: 10px;
-  }
-  .title {
-    display: flex;
-    font-size: 30px;
-    color: black;
-    font-weight: bold;
-    text-align: center;
-    align-items: center;
-    align-content: center;
-    align-self: center;
-    position: fixed;
-    left: 120px;
-    right: 50px;
-    font-family: Arial, Helvetica, sans-serif;
-=======
   }
   .title {
     display: flex;
@@ -149,7 +88,6 @@
     left: 38vw;
     font-family: Arial, Helvetica, sans-serif;
     text-decoration: none;
->>>>>>> 391d1e7 (a)
   }
   .icon-menu {
     display: flex;
@@ -232,11 +170,6 @@
     font-size: 12px;
     text-align: left;
   }
-<<<<<<< HEAD
-}
-@media only screen and (min-width: 768px) {
-  /* /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// */
-=======
   .translateBtn {
     background-color: #0091b9a4;
     display: flex;
@@ -246,21 +179,13 @@
 }
 /* ***************************************************************************************************************** */
 @media only screen and (min-width: 768px) {
->>>>>>> 391d1e7 (a)
   .top {
     display: flex;
     min-width: none;
     min-height: 40px;
-<<<<<<< HEAD
-    max-width: 100vw;
-    min-width: 1800px;
-    background-color: #1a4848;
-    display: flex;
-=======
     width: calc(1800px - (1800px - 100vw));
     max-width: 100%;
     background-color: #1a4848;
->>>>>>> 391d1e7 (a)
     align-items: center;
   }
   .info-section {
@@ -273,16 +198,10 @@
     align-content: center;
   }
   .text {
-<<<<<<< HEAD
-    font-size: 2.5vh;
-    position: fixed;
-    left: 40vw;
-=======
     font-size: calc(1vh + 0.5vw);
     position: fixed;
     left: 50%;
     transform: translateX(-50%);
->>>>>>> 391d1e7 (a)
     color: white;
     font-weight: 200;
     font-family: Arial, Helvetica, sans-serif;
@@ -293,12 +212,8 @@
     align-items: center;
     padding-right: 32px;
     position: fixed;
-<<<<<<< HEAD
-    left: 1630px;
-=======
     left: 99%;
     transform: translateX(-99%);
->>>>>>> 391d1e7 (a)
     font-family: Arial, Helvetica, sans-serif;
     color: white;
   }
@@ -332,16 +247,9 @@
   }
 
   .header {
-<<<<<<< HEAD
-    max-width: 100vw;
-    min-width: 1800px;
-    min-height: 160px;
-    max-width: 100vw;
-=======
     max-width: 100%;
     min-width: 768px;
     height: 160px;
->>>>>>> 391d1e7 (a)
     background-color: #ffd500;
     display: flex;
     flex-direction: row;
@@ -350,19 +258,6 @@
   }
   .title {
     display: flex;
-<<<<<<< HEAD
-    font-size: 5vh;
-    color: black;
-    font-weight: bold;
-    text-align: center;
-    align-items: center;
-    align-content: center;
-    align-self: center;
-    position: fixed;
-    left: 43vw;
-    right: 43vw;
-    font-family: Arial, Helvetica, sans-serif;
-=======
     font-size: calc(2vh + 2vw);
     color: black;
     font-weight: bold;
@@ -373,7 +268,6 @@
     margin: 0px;
     padding: 0px;
     text-decoration: none;
->>>>>>> 391d1e7 (a)
   }
   .title:hover {
     cursor: pointer;
@@ -441,10 +335,7 @@
     margin-right: 32px;
   }
   .search-input {
-<<<<<<< HEAD
-=======
     width: 280px;
->>>>>>> 391d1e7 (a)
     background-color: #0091b9a4;
     border-radius: 0px;
   }
@@ -495,9 +386,6 @@
   .categoryItem:focus {
     background-color: #0091b9a4;
   }
-<<<<<<< HEAD
-=======
-
   .react-rotating-text-cursor {
     animation: blinking-cursor 0.8s cubic-bezier(0.68, 0.01, 0.01, 0.99) 0s
       infinite;
@@ -537,5 +425,4 @@
     justify-content: center;
     margin: 0px;
   }
->>>>>>> 391d1e7 (a)
 }

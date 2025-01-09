@@ -4,12 +4,8 @@
     flex-direction: column;
     background-color: #dcf1f7;
     font-family: Arial, Helvetica, sans-serif;
-<<<<<<< HEAD
-    padding: 32px;
-=======
     width: 100%;
     padding-bottom: 32px;
->>>>>>> 391d1e7 (a)
   }
   .line {
     margin: 0px;
@@ -21,27 +17,6 @@
     gap: 10px;
     margin-right: 10px;
   }
-<<<<<<< HEAD
-  .image-thumbnail {
-    width: 80px;
-    height: 80px;
-    cursor: pointer;
-    border: none;
-  }
-  .main-image {
-    width: 200px;
-    height: 100px;
-    object-fit: cover;
-  }
-  .selected {
-    border: 2px solid black;
-  }
-  .image-section {
-    display: flex;
-    flex-direction: row;
-    margin: 12px;
-    margin-top: 42px;
-=======
   .image-section {
     display: flex;
     flex-direction: row;
@@ -56,39 +31,26 @@
     background-color: white;
     height: 65vh;
     width: 65vw;
->>>>>>> 391d1e7 (a)
   }
   .information-section {
     display: flex;
     flex-direction: column;
-<<<<<<< HEAD
-    margin-top: 20px;
-    gap: 10px;
-=======
     margin-top: 8px;
     gap: 10px;
     margin-left: 22px;
->>>>>>> 391d1e7 (a)
   }
   .info {
     margin: 0px;
   }
   .size-choice {
-<<<<<<< HEAD
-    width: 100px;
-=======
     width: 180px;
->>>>>>> 391d1e7 (a)
     height: 60px;
     background-color: #dcf1f7;
     border: 3px solid #0091b9;
     padding: 10px;
     border-style: dashed;
     background-color: none;
-<<<<<<< HEAD
-=======
     font-size: 22px;
->>>>>>> 391d1e7 (a)
   }
   .size-choice:hover {
     cursor: pointer;
@@ -103,26 +65,6 @@
     display: flex;
     flex-direction: row;
     gap: 10px;
-<<<<<<< HEAD
-    width: 392px;
-    overflow-x: scroll;
-  }
-  .btn {
-    width: 320px;
-    height: 60px;
-    background-color: #dcf1f7;
-    border: 3px solid #0091b9;
-    text-align: center;
-    border-style: dashed;
-  }
-  .quantityInput {
-    height: 30px;
-    font-size: 18px;
-    width: 310px;
-    border: 3px solid #0091b9;
-    border-style: dashed;
-  }
-=======
     overflow-x: auto;
   }
   .btn {
@@ -136,8 +78,6 @@
     word-wrap: break-word;
     white-space: nowrap;
   }
-
->>>>>>> 391d1e7 (a)
   .btn:focus {
     background-color: #004e9b57;
     border: 3px solid #004e9b;
@@ -148,9 +88,6 @@
     flex-direction: row;
     gap: 10px;
   }
-<<<<<<< HEAD
-}
-=======
   .alert {
     position: absolute;
     top: 0;
@@ -180,19 +117,14 @@
   }
 }
 /* **************************************************************************************************************** */
->>>>>>> 391d1e7 (a)
 @media only screen and (min-width: 768px) {
   .main-container {
     display: flex;
     flex-direction: row;
     background-color: #dcf1f7;
     font-family: Arial, Helvetica, sans-serif;
-<<<<<<< HEAD
-    padding: 32px;
-=======
     width: 100%;
     padding-bottom: 32px;
->>>>>>> 391d1e7 (a)
   }
   .line {
     margin: 0px;
@@ -205,33 +137,15 @@
     margin-right: 10px;
   }
   .image-col1 img {
-<<<<<<< HEAD
-=======
-    background-color: white;
->>>>>>> 391d1e7 (a)
     width: 170px;
     height: 170px;
     cursor: pointer;
     border: none;
   }
-<<<<<<< HEAD
-  .main-image {
-    width: 300px;
-    height: 200px;
-    object-fit: cover; /* Optional: Keeps the aspect ratio intact */
-  }
-  .selected {
-    border: 2px solid black;
-  }
-=======
->>>>>>> 391d1e7 (a)
   .image-section {
     display: flex;
     flex-direction: row;
     margin: 32px;
-<<<<<<< HEAD
-    height: 500px;
-=======
   }
   .image-wrapper {
     background-color: white;
@@ -246,7 +160,6 @@
     width: 300px;
     height: 200px;
     object-fit: cover;
->>>>>>> 391d1e7 (a)
   }
   .information-section {
     display: flex;
@@ -275,27 +188,11 @@
     border: 3px solid #004e9b;
     padding: 10px;
     border-style: dashed;
-<<<<<<< HEAD
-    font-size: 22px;
-=======
->>>>>>> 391d1e7 (a)
   }
   .con2 {
     display: flex;
     flex-direction: row;
     gap: 10px;
-<<<<<<< HEAD
-  }
-  .btn {
-    width: 620px;
-    height: 60px;
-    background-color: #dcf1f7;
-    border: 3px solid #0091b9;
-    text-align: center;
-    border-style: dashed;
-    font-size: 22px;
-  }
-=======
     overflow-x: auto;
   }
   .btn {
@@ -309,8 +206,6 @@
     word-wrap: break-word;
     white-space: nowrap;
   }
-
->>>>>>> 391d1e7 (a)
   .btn:focus {
     background-color: #004e9b57;
     border: 3px solid #004e9b;
@@ -321,10 +216,6 @@
     flex-direction: row;
     gap: 10px;
   }
-<<<<<<< HEAD
-  .quantityInput {
-    width: 612px;
-=======
   .alert {
     position: absolute;
     top: 0;
@@ -335,16 +226,11 @@
   }
   .quantityInput {
     width: 550px;
->>>>>>> 391d1e7 (a)
     height: 40px;
     background-color: #dcf1f7;
     border: 3px solid #0091b9;
     text-align: center;
     border-style: dashed;
-<<<<<<< HEAD
-    margin-bottom: 50px;
-    font-size: 22px;
-=======
     font-size: 22px;
     margin-bottom: 50px;
   }
@@ -356,6 +242,5 @@
   .title {
     padding-top: 12px;
     color: #0091b9;
->>>>>>> 391d1e7 (a)
   }
 }

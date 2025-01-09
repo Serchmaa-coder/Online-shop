@@ -55,7 +55,6 @@ export default function LoginPage() {
   ) => Promise<void> = async (values, router) => {
     const { email, password } = values;
     try {
-      // Sign in with Firebase Authentication
       const userCredential = await signInWithEmailAndPassword(
         auth,
         email || '',

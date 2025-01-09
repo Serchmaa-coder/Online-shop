@@ -3,13 +3,7 @@ import React, { useEffect, useState } from 'react';
 import styles from './page.module.css';
 import { Spin, Card } from 'antd';
 import Image from 'next/image';
-import {
-  getFirestore,
-  collection,
-  getDocs,
-  doc,
-  writeBatch,
-} from 'firebase/firestore';
+import { getFirestore, collection, getDocs } from 'firebase/firestore';
 import { initializeFirebase } from '../../../../lib/firebaseClient';
 import Link from 'next/link';
 import { getAuth, onAuthStateChanged } from 'firebase/auth';

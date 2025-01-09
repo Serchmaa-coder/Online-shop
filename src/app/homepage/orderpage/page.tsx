@@ -18,26 +18,19 @@ interface Product {
   name: string;
   price: number;
   images: string[];
-<<<<<<< HEAD
-=======
   orderDate: string; // Add this field to group by date
 }
 
 interface GroupedProducts {
   [date: string]: Product[];
->>>>>>> 391d1e7 (a)
 }
 
 export default function OrderPage() {
   const [loading, setLoading] = useState<boolean>(true);
-<<<<<<< HEAD
-  const [cartData, setCartData] = useState<{ products: Product[] } | null>(
-=======
   const [groupedOrders, setGroupedOrders] = useState<GroupedProducts | null>(
->>>>>>> 391d1e7 (a)
     null,
   );
-  const [priceSum, setPriceSum] = useState<number>(0);
+  const [, setPriceSum] = useState<number>(0);
 
   useEffect(() => {
     const auth = getAuth();
@@ -52,26 +45,10 @@ export default function OrderPage() {
 
           if (orderSnapshot.empty) {
             console.warn('No order found for this user.');
-<<<<<<< HEAD
-            setCartData(null);
-=======
             setGroupedOrders(null);
->>>>>>> 391d1e7 (a)
             setLoading(false);
             return;
           }
-
-<<<<<<< HEAD
-          const cartProducts: Product[] = orderSnapshot.docs.map(
-            (doc) => doc.data() as Product,
-          );
-
-          setCartData({ products: cartProducts });
-
-          // Calculate total price sum
-          const totalPrice = cartProducts.reduce(
-            (sum, product) => sum + Number(product.price), // Convert to number
-=======
           const allProducts: Product[] = orderSnapshot.docs.map((doc) => {
             const data = doc.data();
             return {
@@ -99,7 +76,6 @@ export default function OrderPage() {
 
           const totalPrice = allProducts.reduce(
             (sum, product) => sum + Number(product.price),
->>>>>>> 391d1e7 (a)
             0,
           );
           setPriceSum(totalPrice);
@@ -119,72 +95,12 @@ export default function OrderPage() {
 
   return (
     <div className={styles.con}>
-<<<<<<< HEAD
-      <h1 className={styles.title}>Orders</h1>
-=======
       <h1 className={styles.title}>Order History</h1>
->>>>>>> 391d1e7 (a)
       <div className={styles['main-container']}>
         {loading ? (
           <div className={styles['loading-container']}>
             <Spin size="large" />
           </div>
-<<<<<<< HEAD
-        ) : cartData === null ||
-          !cartData.products ||
-          cartData.products.length === 0 ? (
-          <p>No products in your orders.</p>
-        ) : (
-          <div className={styles.categories}>
-            {cartData.products.map((product) => (
-              <div className={styles.items} key={product.productId}>
-                <Link
-                  href={`/homepage/productpage?productId=${product.productId}`}
-                >
-                  <Card
-                    hoverable
-                    style={{
-                      width: '220px',
-                      height: '360px',
-                      display: 'flex',
-                      flexDirection: 'column',
-                    }}
-                    cover={
-                      Array.isArray(product.images) &&
-                      product.images.length > 0 ? (
-                        <Image
-                          priority
-                          className={styles.photo}
-                          width={200}
-                          height={250}
-                          alt={product.name}
-                          src={product.images[0]}
-                        />
-                      ) : (
-                        <div
-                          style={{
-                            width: '200px',
-                            height: '250px',
-                            backgroundColor: 'gray',
-                            display: 'flex',
-                          }}
-                        >
-                          No Image
-                        </div>
-                      )
-                    }
-                  >
-                    <Meta
-                      title={
-                        <span style={{ fontSize: '20px', fontWeight: 'bold' }}>
-                          {product.name}
-                        </span>
-                      }
-                      description={`Price: ${Intl.NumberFormat('en-US', { maximumFractionDigits: 0 }).format(product.price)}₮`}
-                    />
-                  </Card>
-                </Link>
-=======
         ) : !groupedOrders || Object.keys(groupedOrders).length === 0 ? (
           <p>No products in your orders.</p>
         ) : (
@@ -251,22 +167,11 @@ export default function OrderPage() {
                     </div>
                   ))}
                 </div>
->>>>>>> 391d1e7 (a)
               </div>
             ))}
           </div>
         )}
       </div>
-<<<<<<< HEAD
-      <div className={styles.footer}>
-        <input
-          className={styles.priceSum}
-          value={`Price sum: ${Intl.NumberFormat('en-US', { maximumFractionDigits: 0 }).format(priceSum)}₮`}
-          readOnly
-        />
-      </div>
-=======
->>>>>>> 391d1e7 (a)
     </div>
   );
 }

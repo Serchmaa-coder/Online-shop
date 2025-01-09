@@ -20,11 +20,7 @@ export default function RootLayout({
   }, []);
 
   const divStyle = {
-<<<<<<< HEAD
-    height: windowWidth <= 768 ? '120px' : '200px',
-=======
     height: windowWidth <= 768 ? '120px' : '240px',
->>>>>>> 391d1e7 (a)
   };
 
   return (

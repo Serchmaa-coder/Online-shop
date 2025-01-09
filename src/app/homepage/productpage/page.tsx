@@ -11,7 +11,6 @@ import {
   getFirestore,
   addDoc,
   doc,
-  updateDoc,
   setDoc,
 } from 'firebase/firestore';
 import { getAuth, onAuthStateChanged } from 'firebase/auth';
@@ -111,7 +110,7 @@ export default function ProductPage() {
     };
 
     fetchProduct();
-  }, [productId]);
+  }, [product?.Options, productId]);
 
   const handleAddToCollection = async (
     product: Product,

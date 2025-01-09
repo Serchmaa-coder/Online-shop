@@ -18,11 +18,8 @@ import {
   getFirestore,
 } from 'firebase/firestore';
 import { useEffect, useState } from 'react';
-<<<<<<< HEAD
-=======
 import ReactTextRotator from 'react-text-rotator';
 import { useRouter } from 'next/navigation';
->>>>>>> 391d1e7 (a)
 
 const app = initializeFirebase();
 const db = getFirestore(app);
@@ -34,10 +31,6 @@ type Category = {
 };
 
 export default function Header() {
-<<<<<<< HEAD
-  const [collapsed, setCollapsed] = useState(true);
-  const [categories, setCategories] = useState<DocumentData[]>([]);
-=======
   const router = useRouter();
   const [collapsed, setCollapsed] = useState(true);
   const [categories, setCategories] = useState<DocumentData[]>([]);
@@ -50,24 +43,14 @@ export default function Header() {
       router.push(`/search-result-page?query=${encodeURIComponent(query)}`);
     }
   };
->>>>>>> 391d1e7 (a)
 
   useEffect(() => {
     const fetchCategories = async () => {
       try {
         const categoriesCol = collection(db, 'Product categories');
         const categorySnapshot = await getDocs(categoriesCol);
-<<<<<<< HEAD
-
-        // Log raw data to inspect the structure
         const rawCategoryData = categorySnapshot.docs.map((doc) => doc.data());
         console.log('Raw category data: ', rawCategoryData);
-
-        // Map the raw data to the desired structure
-=======
-        const rawCategoryData = categorySnapshot.docs.map((doc) => doc.data());
-        console.log('Raw category data: ', rawCategoryData);
->>>>>>> 391d1e7 (a)
         const categoryData: Category[] = rawCategoryData.flatMap(
           (categoryObject) => {
             return Object.entries(categoryObject).map(
@@ -79,19 +62,9 @@ export default function Header() {
             );
           },
         );
-<<<<<<< HEAD
-
-        // Sort categories alphabetically by name
         const sortedCategories = categoryData.sort((a, b) =>
           a.name.localeCompare(b.name),
         );
-
-        // Set the categories state
-=======
-        const sortedCategories = categoryData.sort((a, b) =>
-          a.name.localeCompare(b.name),
-        );
->>>>>>> 391d1e7 (a)
         setCategories(sortedCategories);
         console.log('Processed and sorted category data: ', sortedCategories);
       } catch (error) {
@@ -101,8 +74,6 @@ export default function Header() {
     fetchCategories();
   }, []);
 
-<<<<<<< HEAD
-=======
   useEffect(() => {
     const fetchMessages = async () => {
       try {
@@ -139,18 +110,10 @@ export default function Header() {
     ])
     .flat();
 
->>>>>>> 391d1e7 (a)
   const toggleCollapsed = () => {
     setCollapsed(!collapsed);
   };
 
-<<<<<<< HEAD
-  return (
-    <div style={{ position: 'fixed', top: '0', zIndex: '1000' }}>
-      <div className={styles.top}>
-        <div className={styles['info-section']}>
-          <p className={styles.text}>Sale info xxxxxxxxxxxx of xxxxxxxxx</p>
-=======
   useEffect(() => {
     const loadGoogleTranslate = () => {
       if (!document.getElementById('google-translate-script')) {
@@ -188,7 +151,6 @@ export default function Header() {
               startDelay={5000}
             />
           </div>
->>>>>>> 391d1e7 (a)
         </div>
         <div className={styles.btns}>
           <Link href="/login">
@@ -213,20 +175,6 @@ export default function Header() {
           {categories.map((category, index) => (
             <div key={index}>
               <div
-<<<<<<< HEAD
-                onClick={() => console.log(`${category} clicked`)}
-                className={styles.categoryItem}
-              >
-                {Object.entries(category).map(([categoryName]) => (
-                  <button
-                    key={categoryName}
-                    className={styles.categoryItem}
-                    onClick={() => setCollapsed(collapsed!)}
-                  >
-                    <h2>{categoryName}</h2>
-                  </button>
-                ))}
-=======
                 onClick={() => {
                   router.push(`/categorypage?categoryId=${category.id}`);
                   console.log(category.id);
@@ -239,7 +187,6 @@ export default function Header() {
                 >
                   <h2>{category.name}</h2>
                 </button>
->>>>>>> 391d1e7 (a)
               </div>
             </div>
           ))}
@@ -249,14 +196,9 @@ export default function Header() {
           className={`${styles.background} ${collapsed ? styles.hiddenback : ''}`}
           onClick={toggleCollapsed}
         ></button>
-<<<<<<< HEAD
-
-        <p className={styles.title}>SHOP NAME</p>
-=======
         <Link className={styles.title} href="/">
           SHOP NAME
         </Link>
->>>>>>> 391d1e7 (a)
         <div className={styles.con1}>
           <button className={styles['btn-cart']}>
             <ShoppingCartOutlined
@@ -273,15 +215,6 @@ export default function Header() {
         </div>
       </nav>
       <div className={styles['search-section']}>
-<<<<<<< HEAD
-        <Input
-          type="text"
-          placeholder="Search"
-          className={styles['search-input']}
-          size="large"
-          prefix={<SearchOutlined />}
-        />
-=======
         <form onSubmit={handleSearch}>
           <Input
             type="text"
@@ -295,7 +228,6 @@ export default function Header() {
             <i className="fa fa-search"></i>
           </button>
         </form>
->>>>>>> 391d1e7 (a)
       </div>
     </div>
   );
