@@ -1,36 +1,22 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Жижиг хэмжээний онлайн худалдааны платформ хөгжүүлэх
+> Энэ нь [Next.js](https://nextjs.org) project болно [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
 
-## Getting Started
+## Системийн таницуулга
+Энэхүү ажлын хүрээнд программ маань хэрэглэгчийн худалдаж авахаар сонгосон барааны захиалга үүсгэх үүргийг гүйцэтгэдэг веб платформ хөгжүүлсэн. Үүндээ миний бие "back-end" буюу серверийн хэсгийн хөгжүүлэлтийг "Firebase" технологи дээр хийх юм.
+Гол зорилго нь жижиг хэмжээний дижитал худалдааны платформ хөгжүүлэлтийн явцыг сервергүй тооцоололтын технологи ашиглаж хурдасгаж, гарах зардлыг багасгах юм.
 
-First, run the development server:
+## Алсын хараа
+Уг платформ маань одоогоор хөгжүүлэлтийн хэлбэрт байгаа тул ирээдүйд хувиараа худалдаа эрхлэгч нартай холбогдон жинхэнэ худалдаа хийлгэж үзэх төлөвлөгөөтэй байгаа билээ. Мөн манай программ одоогоор зөвхөн веб хуудасны хэлбэрээр хөгжүүлэгдсэн тул ирээдүйд ухаалаг утасны апликейшн хэлбэрээр хөгжүүлэлт хийх алсын хараатай байна.
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## UserFlow diagram
+Хэрэглэгчийн урсгал гэдэг нь хэрэглэгч тухайн системийн хүрээнд тодорхой зорилгод хүрэхийн тулд хийдэг алхмуудын дүрсэлдэг диаграм юм. Энэ нь дизайнерууд, хөгжүүлэгчид болон сонирхогч талуудад хэрэглэгчид нь платформоор хэрхэн хөдөлдгийг ойлгож болзошгүй хүндрэлийн цэгүүдийг тодорхойлон хэрэглэгчийн ерөнхий туршлагыг оновчтой болгоход тусалдаг. Уг диаграмм нь доорх гурван элементүүдийн тусламжтайгаар хэрэглэгч системээр хэрхэн аялдаг талаар дүрсэлдэг. 
+[`link-to-userflow`](https://www.figma.com/design/yIQ1yMVQ90QSANmlYKcw4q/shopping-platform?node-id=0-1&t=uZzRngHGPaKefGq2-1)
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Low fidelity prototype
+Хэрэглэгчийн урсгалын диаграммыг баримтлан платформынхаа бага нарийвчлалтай дизайны прототипыг урлав. Бага нарийвчлалтай буюу Low-fidelity прототип загвар нь үйл ажиллагааг турших, санал хүсэлтийг цуглуулах зорилгоор дизайны үйл явцын эхэнд ашиглагддаг системийн энгийн хувилбар юм. Эдгээр загварууд нь өнгө, хэв маяг, харилцан үйлчлэлийн эффект гэх мэт нарийн ширийн зүйлсээс илүү бүтэц, зохион байгуулалт, ерөнхий урсгалд анхаарлаа хандуулдаг. Тиймээс уг загвар дээр зөвхөн хар, цагаан болон саарал гэх өнгөний гэр бүлийг ашигласан юм.
+[`link-to-low-fi-design`](https://www.figma.com/design/yIQ1yMVQ90QSANmlYKcw4q/shopping-platform?node-id=2-159&t=uZzRngHGPaKefGq2-1)
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
-
-## Learn More
-
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+## High fidelity prototype
+Өндөр нарийвчлалтай дизайн буюу hi-fi дизайн нь бүтээгдэхүүний интерфейсийн нарийвчилсан, өнгөлсөн дүрслэлийг бий болгодог дизайны үйл явцын дэвшилтэт шат юм. Үнэнч чанар багатай утас рам эсвэл загвараас ялгаатай нь өндөр нарийвчлалтай загвар нь өнгө, хэвлэх зүй, зураг, зай, интерактив элементүүдийг агуулсан гадаад төрх, үйл ажиллагааны хувьд эцсийн бүтээгдэхүүнтэй маш төстэй байдаг. Энэхүү дизайны түвшин нь хэрэглэгчийн туршлага (UX) болон хэрэглэгчийн интерфэйсийг (UI) бодитойгоор харах боломжийг олгодог бөгөөд ихэвчлэн хэрэглэгчийн туршилт, оролцогч талуудын танилцуулга, эцсийн бүтээх үе шатанд хөгжүүлэгчдийг чиглүүлэхэд ашиглагддаг. Өндөр нарийвчлалтай загвар нь дизайны бүх тал нь брэндийн удирдамж, хэрэглэгчийн хэрэгцээ шаардлагад нийцэж байгааг баталгаажуулдаг.
+[`link-to-hi-fi-design`](https://www.figma.com/design/yIQ1yMVQ90QSANmlYKcw4q/shopping-platform?node-id=2-160&t=uZzRngHGPaKefGq2-1)
