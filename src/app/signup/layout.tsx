@@ -1,5 +1,5 @@
-import Footer from '../../../component/footer/page';
-import HeaderOfAuthentication from '../../../component/header2/page';
+import Footer from '../component/footer/page';
+import HeaderOfAuthentication from '../component/header2/page';
 
 export default function SignUpLayout({
   children,

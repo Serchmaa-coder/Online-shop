@@ -5,7 +5,7 @@ import styles from './page.module.css';
 import Image from 'next/image';
 import { getStorage, ref, listAll, getDownloadURL } from 'firebase/storage';
 import { getFirestore, collection, getDocs } from 'firebase/firestore';
-import { initializeFirebase } from '../../lib/firebaseClient';
+import { initializeFirebase } from '../../../../lib/firebaseClient';
 import { useRouter } from 'next/navigation'; // Import useRouter
 import { getAuth, onAuthStateChanged } from 'firebase/auth';
 const { Meta } = Card;

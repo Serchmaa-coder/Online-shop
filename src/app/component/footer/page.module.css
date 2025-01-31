@@ -1,7 +1,7 @@
 @media only screen and (max-width: 768px) {
   .container {
     height: 200px;
-    width: 392px;
+    width: 100%;
     background-color: #1a4848;
     display: flex;
     color: white;

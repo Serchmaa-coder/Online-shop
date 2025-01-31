@@ -5,7 +5,7 @@ import styles from './page.module.css';
 import { LoadingOutlined } from '@ant-design/icons';
 import Image from 'next/image';
 import { getStorage, ref, listAll, getDownloadURL } from 'firebase/storage';
-import { initializeFirebase } from '../../lib/firebaseClient';
+import { initializeFirebase } from '../../../../lib/firebaseClient';
 // Initialize Firebase
 const app = initializeFirebase();
 const storage = getStorage(app);

@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable react-hooks/exhaustive-deps */
 'use client';
 import { useRouter } from 'next/navigation';
@@ -7,7 +8,6 @@ import {
   LogoutOutlined,
   MenuFoldOutlined,
   MenuUnfoldOutlined,
-  SearchOutlined,
   ShoppingCartOutlined,
   UserOutlined,
 } from '@ant-design/icons';
@@ -20,12 +20,12 @@ import {
   onSnapshot,
 } from 'firebase/firestore';
 import { collection, getDocs } from 'firebase/firestore';
-import { Dropdown, Input, MenuProps } from 'antd';
-import { initializeFirebase } from '../../lib/firebaseClient';
+import { Dropdown, MenuProps } from 'antd';
+import { initializeFirebase } from '../../../../lib/firebaseClient';
 import Image from 'next/image';
 import { doc, getDoc } from 'firebase/firestore';
-import ReactTextRotator from 'react-text-rotator';
 import Link from 'next/link';
+import { fetchMessages } from '../../../../lib/fetchCategoryData';
 
 const app = initializeFirebase();
 const auth = getAuth(app);
@@ -45,20 +45,56 @@ export default function Mainheader() {
   const [collapsed, setCollapsed] = useState(true);
   const [categories, setCategories] = useState<DocumentData[]>([]);
   const [totalPrice, setTotalPrice] = useState<number>(0);
-  const [messages, setMessages] = useState<DocumentData[]>([]);
   const [userId, setUserId] = useState<string | null>(null);
-  const [query, setQuery] = useState('');
   const [counter, setCounter] = useState(0);
   const [wishCounter, setWishCounter] = useState(0);
+  const [messages, setMessages] = useState<string[]>([]);
+  const [currentMessageIndex, setCurrentMessageIndex] = useState(0);
 
-  const handleSearch = (e: { preventDefault: () => void }) => {
-    e.preventDefault();
-    if (query.trim()) {
-      router.push(
-        `homepage/search-result-page?query=${encodeURIComponent(query)}`,
-      );
+  useEffect(() => {
+    const getMessages = async () => {
+      const data = await fetchMessages();
+      const texts = data
+        .flatMap((message) => [message.m01, message.m02, message.m03])
+        .filter(Boolean);
+      setMessages(texts);
+    };
+    getMessages();
+  }, []);
+
+  useEffect(() => {
+    if (messages.length > 0) {
+      const interval = setInterval(() => {
+        setCurrentMessageIndex(
+          (prevIndex) => (prevIndex + 1) % messages.length,
+        );
+      }, 2000);
+
+      return () => clearInterval(interval);
     }
-  };
+  }, [messages]);
+
+  useEffect(() => {
+    (window as any).googleTranslateElementInit = function () {
+      new (window as any).google.translate.TranslateElement(
+        { pageLanguage: 'en' },
+        'google_translate_element',
+      );
+    };
+
+    const loadGoogleTranslate = () => {
+      if (!document.getElementById('google-translate-script')) {
+        const script = document.createElement('script');
+        script.id = 'google-translate-script';
+        script.src =
+          'https://translate.google.com/translate_a/element.js?cb=googleTranslateElementInit';
+        script.async = true;
+        document.head.appendChild(script);
+      }
+    };
+
+    loadGoogleTranslate();
+  }, []);
 
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, async (user) => {
@@ -235,78 +271,13 @@ export default function Mainheader() {
     },
   ];
 
-  useEffect(() => {
-    const fetchMessages = async () => {
-      try {
-        const messagesCol = collection(db, 'important messages');
-        const messagesSnapshot = await getDocs(messagesCol);
-        const messagesData = messagesSnapshot.docs.map((doc) => doc.data());
-        console.log('Fetched messages: ', messagesData);
-        setMessages(messagesData);
-      } catch (error) {
-        console.error('Error fetching sale messages: ', error);
-      }
-    };
-
-    fetchMessages();
-  }, []);
-
-  const content = messages
-    .map((message) => [
-      {
-        text: message[`m01`],
-        className: 'classA',
-        animation: 'fade',
-      },
-      {
-        text: message[`m02`],
-        className: 'classB',
-        animation: 'fade',
-      },
-      {
-        text: message[`m03`],
-        className: 'classC',
-        animation: 'fade',
-      },
-    ])
-    .flat();
-
-  useEffect(() => {
-    const loadGoogleTranslate = () => {
-      if (!document.getElementById('google-translate-script')) {
-        const script = document.createElement('script');
-        script.id = 'google-translate-script';
-        script.src =
-          'https://translate.google.com/translate_a/element.js?cb=googleTranslateElementInit';
-        script.async = true;
-
-        script.onload = () => {
-          window.googleTranslateElementInit = function () {
-            new window.google.translate.TranslateElement(
-              { pageLanguage: 'en' },
-              'google_translate_element',
-            );
-          };
-        };
-
-        document.head.appendChild(script);
-      }
-    };
-
-    loadGoogleTranslate();
-  }, []);
-
   return (
     <div style={{ position: 'fixed', top: '0', zIndex: '1000' }}>
       <div id="google_translate_element" className={styles.translateBtn}></div>
       <div className={styles.top}>
         <div className={styles['info-section']}>
           <div className={styles.text}>
-            <ReactTextRotator
-              content={content}
-              time={100000}
-              startDelay={5000}
-            />
+            <span className="text-rotate">{messages[currentMessageIndex]}</span>
           </div>
         </div>
       </div>
@@ -390,21 +361,6 @@ export default function Mainheader() {
           </Dropdown>
         </div>
       </nav>
-      <div className={styles['search-section']}>
-        <form onSubmit={handleSearch}>
-          <Input
-            type="text"
-            placeholder="Search.."
-            value={query}
-            onChange={(e) => setQuery(e.target.value)}
-            className={styles['search-input']}
-          />
-          <button type="submit" className={styles.searchBtn}>
-            <SearchOutlined />
-            <i className="fa fa-search"></i>
-          </button>
-        </form>
-      </div>
       {counter != 0 ? (
         <div className={styles['cart-count']}>{counter}</div>
       ) : (

@@ -1,5 +1,5 @@
-import Footer from '../../../component/footer/page';
-import Mainheader from '../../../component/mainheader/page';
+import Footer from '../component/footer/page';
+import Mainheader from '../component/mainheader/page';
 
 export default function ProfileLayout({
   children,

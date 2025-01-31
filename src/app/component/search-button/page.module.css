@@ -1,0 +1,24 @@
+.searchBtn {
+  height: 30px;
+  border: none;
+  background-color: #0091b9;
+  color: white;
+  align-items: center;
+  align-content: center;
+}
+.searchBtn:hover {
+  cursor: pointer;
+}
+.search-section {
+  width: 328px;
+  margin-top: 12px;
+  position: inherit;
+  right: 0;
+  top: 240px;
+  margin-right: 32px;
+}
+.search-input {
+  width: 280px;
+  background-color: #0091b9a4;
+  border-radius: 0px;
+}

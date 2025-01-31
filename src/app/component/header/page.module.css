@@ -327,22 +327,10 @@
   .btn-profile:hover {
     cursor: pointer;
   }
-  .search-section {
-    width: 328px;
-    margin-top: 12px;
-    position: inherit;
-    right: 0;
-    margin-right: 32px;
-  }
-  .search-input {
-    width: 280px;
-    background-color: #0091b9a4;
-    border-radius: 0px;
-  }
   .menu {
     position: absolute;
     left: 0px;
-    top: 200px;
+    top: 240px;
     width: 350px;
     height: 800px;
     display: flex;
@@ -358,7 +346,7 @@
   }
   .background {
     position: fixed;
-    top: 200px;
+    top: 240px;
     left: 0;
     width: 100vw;
     height: 100vh;
@@ -401,17 +389,6 @@
     100% {
       opacity: 0;
     }
-  }
-  .searchBtn {
-    height: 30px;
-    border: none;
-    background-color: #0091b9;
-    color: white;
-    align-items: center;
-    align-content: center;
-  }
-  .searchBtn:hover {
-    cursor: pointer;
   }
   .translateBtn {
     color: white;

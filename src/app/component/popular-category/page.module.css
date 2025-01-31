@@ -2,6 +2,7 @@
   .popular-category-section {
     margin-left: 12px;
     margin-bottom: 20px;
+    width: 100%;
   }
   .titles {
     font-size: 22px;
@@ -9,7 +10,7 @@
   }
   .categories {
     height: 300px;
-    width: 392px;
+    width: 100%;
     display: flex;
     flex-direction: row;
     overflow-x: auto;

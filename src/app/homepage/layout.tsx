@@ -1,7 +1,8 @@
 'use client';
-import Footer from '../../../component/footer/page';
-import Mainheader from '../../../component/mainheader/page';
+import Footer from '../component/footer/page';
+import Mainheader from '../component/mainheader/page';
 import React, { useState, useEffect } from 'react';
+import SearchBtn from '../component/search-button/page';
 
 export default function RootLayout({
   children,
@@ -27,6 +28,7 @@ export default function RootLayout({
     <html lang="en">
       <body style={{ display: 'flex', flexDirection: 'column', margin: '0%' }}>
         <Mainheader />
+        <SearchBtn />
         <div style={divStyle}></div>
         {children}
         <Footer />
